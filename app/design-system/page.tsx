@@ -15,6 +15,15 @@ import {
   Ticker,
   TopNav,
 } from "../_components/wireframe-primitives";
+import { HunterCard, type Hunter } from "../_components/ui/HunterCard";
+import { Pillar } from "../_components/ui/Pillar";
+
+const SAMPLE_HUNTERS: Hunter[] = [
+  { id: "kira",  name: "KIRA-07", k: "斬", role: "ASSAULT" },
+  { id: "oni",   name: "ONI",     k: "鬼", role: "CONTROL", selected: true },
+  { id: "ghost", name: "GHOST",   k: "影", role: "RECON" },
+  { id: "zen",   name: "ZEN",     k: "禅", role: "RECON",   isNew: true },
+];
 
 const COLOR_TOKENS = [
   { name: "--accent",      value: "#ff2a3d", use: "CTA, danger, kanji highlight, 1 detail/section" },
@@ -305,18 +314,44 @@ export default function DesignSystemPage() {
         <Ticker items={["DESIGN SYSTEM v0.1", "12 TOKENS", "8 PRIMITIVES", "5 PATTERNS", "東京狩人", "READ THE RULES"]} />
       </section>
 
-      {/* === TODO COMPONENTS === */}
-      <SectionBreak ch="10" title="TO BE BUILT" jp="未完" />
+      {/* === DOMAIN COMPONENTS === */}
+      <SectionBreak ch="10" title="DOMAIN COMPONENTS" jp="部品" />
       <section className="th-section alt" style={sectionStyle}>
-        <SectionHead num="10 / BACKLOG" jp="予定" title="DOMAIN" titleAccent="COMPONENTS." />
-        <div style={subHeadStyle}>EXTRACT FROM INLINE · These patterns repeat — should become components</div>
+        <SectionHead num="10 / DOMAIN" jp="部品" title="GAME-SPECIFIC" titleAccent="COMPONENTS." />
+        <div style={subHeadStyle}>BUILT · 2 / 5 · Live · Replace inline JSX in pages</div>
+
+        {/* HunterCard live demo */}
+        <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
+          <Label accent>&lt;HunterCard /&gt; — app/_components/ui/HunterCard.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            STATES · default · selected · isNew
+          </div>
+          <div className="grid-4" style={{ marginTop: 18 }}>
+            {SAMPLE_HUNTERS.map((h) => (
+              <HunterCard key={h.id} hunter={h} />
+            ))}
+          </div>
+        </div>
+
+        {/* Pillar live demo */}
+        <div className="box dark" style={{ padding: 28, marginBottom: 28 }}>
+          <Label accent>&lt;Pillar /&gt; — app/_components/ui/Pillar.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            STATES · default · reverse · with custom body via children
+          </div>
+          <div className="col" style={{ gap: 16, marginTop: 18 }}>
+            <Pillar number="I" title="100-PLAYER ROYALE" kanji="戦" description="20 squads · 1 city · 30-minute match" />
+            <Pillar number="II" title="10 UNIQUE HUNTERS" kanji="鬼" description="Four roles · ranked queue · hand-tuned kits" reverse />
+          </div>
+        </div>
+
+        {/* Backlog */}
+        <div style={subHeadStyle}>BACKLOG · 3 remaining</div>
         <div className="grid-2">
           {[
-            { name: "<HunterCard />",         from: "wireframe-home.jsx — hunter grid",  uses: "10 cards × /hunters page" },
-            { name: "<StatBlock />",          from: "wireframe-home.jsx:51",             uses: "4 stat blocks × multi page" },
-            { name: "<ActCard />",            from: "wireframe-pages-1.jsx:51",          uses: "3 act cards × game page" },
-            { name: "<Pillar />",             from: "wireframe-home.jsx:88",             uses: "4 pillars × multi page" },
-            { name: "<HunterPreviewPanel />", from: "wireframe-home.jsx:60-70",          uses: "Hero panel · 1× but complex" },
+            { name: "<StatBlock />",          from: "wireframe-home.jsx:51",     uses: "4 stat blocks × multi page" },
+            { name: "<ActCard />",            from: "wireframe-pages-1.jsx:51",  uses: "3 act cards × game page" },
+            { name: "<HunterPreviewPanel />", from: "wireframe-home.jsx:60-70",  uses: "Hero panel · 1× but complex" },
           ].map((c) => (
             <div key={c.name} className="box dashed" style={{ padding: 20, background: "transparent", borderColor: "var(--border-dark)" }}>
               <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--accent)", letterSpacing: "0.06em" }}>{c.name}</div>

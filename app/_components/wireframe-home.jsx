@@ -16,6 +16,8 @@ import {
   Ticker,
   TopNav,
 } from "./wireframe-primitives";
+import { HunterCard } from "./ui/HunterCard";
+import { Pillar } from "./ui/Pillar";
 
 export const HUNTERS = [
   { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT",  sig: "Phase Blade · 1.5s i-frame dash" },
@@ -85,20 +87,14 @@ export const PageHome = () => (
           { n: "III", t: "CYBERWARE LOOT",     k: "改", d: "40+ implants · install mid-match" },
           { n: "IV",  t: "5-STACK SQUADS",     k: "組", d: "Voice ping · callouts · role bonus XP", rev: true },
         ].map((f, i) => (
-          <div key={i} className={`pillar ${f.rev ? "reverse" : ""}`}>
-            <div className="pillar-art">
-              <Kanji size="huge" muted style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--accent)", opacity: 0.5, fontSize: 140 }}>{f.k}</Kanji>
-            </div>
-            <div className="pillar-body">
-              <div className="row" style={{ alignItems: "baseline", gap: 14 }}>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--accent)", letterSpacing: "0.18em" }}>PILLAR · {f.n}</span>
-                <div style={{ flex: 1, height: 1, background: "var(--border-dark)" }} />
-              </div>
-              <h3 className="pillar-title">{f.t}</h3>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-dark)", letterSpacing: "0.06em", marginBottom: 12 }}>{f.d}</div>
-              <Lines count={3} widths={["100%", "92%", "70%"]} />
-            </div>
-          </div>
+          <Pillar
+            key={i}
+            number={f.n}
+            title={f.t}
+            kanji={f.k}
+            description={f.d}
+            reverse={f.rev}
+          />
         ))}
       </div>
     </section>
@@ -140,15 +136,8 @@ export const PageHome = () => (
             <span style={{ marginLeft: "auto", fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.14em" }}>10/10 UNLOCKED</span>
           </div>
           <div className="grid-5">
-            {HUNTERS.map((h, i) => (
-              <div key={i} className={`hunter-card ${h.selected ? "selected" : ""}`}>
-                <Kanji className="kanji">{h.k}</Kanji>
-                <div className="meta">
-                  <div className="hname">{h.name}</div>
-                  <div className="hrole">{h.role}</div>
-                </div>
-                {h.isNew && <span className="new-flag">NEW</span>}
-              </div>
+            {HUNTERS.map((h) => (
+              <HunterCard key={h.id} hunter={h} />
             ))}
           </div>
           <div className="box dark" style={{ padding: 16 }}>
