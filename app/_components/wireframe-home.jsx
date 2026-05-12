@@ -17,7 +17,9 @@ import {
   TopNav,
 } from "./wireframe-primitives";
 import { HunterCard } from "./ui/HunterCard";
+import { HunterPreviewPanel } from "./ui/HunterPreviewPanel";
 import { Pillar } from "./ui/Pillar";
+import { StatBlock } from "./ui/StatBlock";
 
 export const HUNTERS = [
   { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT",  sig: "Phase Blade · 1.5s i-frame dash" },
@@ -50,27 +52,25 @@ export const PageHome = () => (
           </div>
           <HeroCTAs />
           <div className="hero-stats">
-            {[["2.4M", "HUNTERS"], ["10", "ROSTER"], ["247K", "ONLINE"], ["9.4", "METACRITIC"]].map((s, i) => (
-              <div key={i}>
-                <div style={{ fontFamily: "var(--font-hand)", fontSize: 32, color: "var(--accent)", fontWeight: 700, lineHeight: 1 }}>{s[0]}</div>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted-dark)", letterSpacing: "0.14em", marginTop: 4 }}>{s[1]}</div>
-              </div>
+            {[
+              { value: "2.4M", label: "HUNTERS" },
+              { value: "10",   label: "ROSTER" },
+              { value: "247K", label: "ONLINE" },
+              { value: "9.4",  label: "METACRITIC" },
+            ].map((s) => (
+              <StatBlock key={s.label} value={s.value} label={s.label} />
             ))}
           </div>
         </div>
-        <div style={{ position: "relative", minHeight: 460 }}>
-          <Img className="hero-media" label="HERO PORTRAIT · KIRA-07 · neon rim light">
-            <Kanji size="huge" muted style={{ position: "absolute", top: 30, right: 30, color: "var(--accent)", opacity: 0.6, fontSize: "min(200px, 24vw)" }}>斬</Kanji>
-            <div style={{ position: "absolute", bottom: 20, left: 20, right: 20, padding: 16, border: "1px solid var(--accent)", background: "#000a", backdropFilter: "blur(8px)" }}>
-              <div className="row" style={{ alignItems: "baseline", justifyContent: "space-between", gap: 8, flexWrap: "wrap" }}>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.16em" }}>HUNTER 01 / 10</div>
-                <Tag variant="accent">ASSAULT</Tag>
-              </div>
-              <div style={{ fontFamily: "var(--font-hand)", fontWeight: 700, fontSize: 34, color: "var(--paper)", marginTop: 4 }}>KIRA-07</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-dark)", marginTop: 4 }}>"PHASE BLADE" · I-FRAME DASH 1.5s</div>
-            </div>
-          </Img>
-        </div>
+        <HunterPreviewPanel
+          index={1}
+          total={10}
+          role="ASSAULT"
+          name="KIRA-07"
+          kanji="斬"
+          sig={'"PHASE BLADE" · I-FRAME DASH 1.5s'}
+          imageLabel="HERO PORTRAIT · KIRA-07 · neon rim light"
+        />
       </div>
     </section>
 

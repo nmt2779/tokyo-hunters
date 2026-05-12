@@ -17,6 +17,8 @@ import {
   TopNav,
 } from "./wireframe-primitives";
 import { HUNTERS } from "./wireframe-home";
+import { ActCard } from "./ui/ActCard";
+import { HunterCard } from "./ui/HunterCard";
 
 export const PageGame = () => (
   <main className="th-canvas">
@@ -41,23 +43,14 @@ export const PageGame = () => (
       <SectionHead num="02 / 30-MIN MATCH" jp="三十分" title="A MATCH IN" titleAccent="THREE ACTS." />
       <div className="grid-3">
         {[
-          { ph: "ACT I", t: "DROP & LOOT", time: "0:00 – 8:00", k: "拾",
+          { ph: "ACT I",   t: "DROP & LOOT",    time: "0:00 – 8:00",   k: "拾",
             d: "Your 5-stack spawns in 1 of 20 mirrored zones. Walled off. No PvP. Loot baseline gear and credits at your own pace." },
-          { ph: "ACT II", t: "CONVERGE", time: "8:00 – 20:00", k: "集",
+          { ph: "ACT II",  t: "CONVERGE",       time: "8:00 – 20:00",  k: "集",
             d: "Zone barriers drop. The Open Zone unlocks at city center — premium loot, cyber-shards, chokepoints. Pick your fights." },
-          { ph: "ACT III", t: "FINAL CIRCLE", time: "20:00 – 30:00", k: "勝",
+          { ph: "ACT III", t: "FINAL CIRCLE",   time: "20:00 – 30:00", k: "勝",
             d: "Neon ring collapses. Cyberware terminals lock. Last squad standing wins. Average finish: 27:12." },
-        ].map((a, i) => (
-          <div key={i} className="box dark" style={{ padding: 22, minHeight: 280 }}>
-            <div className="row" style={{ alignItems: "baseline", justifyContent: "space-between" }}>
-              <Tag variant="accent">{a.ph}</Tag>
-              <Kanji size="md" accent>{a.k}</Kanji>
-            </div>
-            <div style={{ fontFamily: "var(--font-hand)", fontSize: 36, fontWeight: 700, color: "var(--paper)", marginTop: 12, lineHeight: 1 }}>{a.t}</div>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.14em", marginTop: 6 }}>{a.time}</div>
-            <hr className="hr dashed" style={{ margin: "14px 0" }} />
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-dark)", lineHeight: 1.6 }}>{a.d}</div>
-          </div>
+        ].map((a) => (
+          <ActCard key={a.ph} phase={a.ph} title={a.t} time={a.time} kanji={a.k} description={a.d} />
         ))}
       </div>
 
@@ -432,17 +425,7 @@ export const PageHunters = () => (
     <section className="th-section">
       <div className="grid-5">
         {HUNTERS.map((h, i) => (
-          <Link key={h.id} className="hunter-card" href={`/hunters/${h.id}`} style={{ aspectRatio: "1 / 1.35", cursor: "pointer", textDecoration: "none" }}>
-            <div style={{ position: "absolute", top: 8, left: 10, fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--accent)", letterSpacing: "0.14em" }}>0{i+1}</div>
-            <Kanji className="kanji" style={{ fontSize: "clamp(56px, 8vw, 96px)" }}>{h.k}</Kanji>
-            <div className="meta">
-              <div className="hname" style={{ fontSize: 13 }}>{h.name}</div>
-              <div className="hrole">{h.role}</div>
-              <hr className="hr accent" style={{ margin: "8px 0 6px", width: 24 }} />
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--muted-dark)", letterSpacing: "0.06em" }}>{h.sig}</div>
-            </div>
-            {h.isNew && <span className="new-flag">NEW</span>}
-          </Link>
+          <HunterCard key={h.id} hunter={h} variant="list" index={i + 1} />
         ))}
       </div>
     </section>
