@@ -23,10 +23,9 @@
   --muted-dark: #9aa1aa;
   --text-dark: #cfd3da;
 
-  --font-hand: "Caveat", "Patrick Hand", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-jp:   "Noto Sans JP", "Yu Gothic", system-ui, sans-serif;
+  /* Font CSS variables (--font-hand, --font-mono, --font-body, --font-jp)
+     are injected by next/font on the <html> element — see app/layout.tsx.
+     Do NOT redeclare them here. */
 
   --gutter: clamp(16px, 4vw, 56px);
 }
@@ -749,13 +748,6 @@ body.no-jp .kanji { display: none !important; }
 .vp-dt { --canvas-w: auto; }
 .vp-tab { --canvas-w: 768px; }
 .vp-mob { --canvas-w: 390px; }
-
-/* notes annotation */
-.note {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--font-hand); font-size: 16px; color: var(--accent);
-}
-body.no-notes .note { display: none !important; }
 
 @keyframes blink { 50% { opacity: 0; } }
 
