@@ -16,6 +16,10 @@ import {
   Ticker,
   TopNav,
 } from "./wireframe-primitives";
+import { HunterCard } from "./ui/HunterCard";
+import { HunterPreviewPanel } from "./ui/HunterPreviewPanel";
+import { Pillar } from "./ui/Pillar";
+import { StatBlock } from "./ui/StatBlock";
 
 export const HUNTERS = [
   { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT",  sig: "Phase Blade · 1.5s i-frame dash" },
@@ -48,27 +52,25 @@ export const PageHome = () => (
           </div>
           <HeroCTAs />
           <div className="hero-stats">
-            {[["2.4M", "HUNTERS"], ["10", "ROSTER"], ["247K", "ONLINE"], ["9.4", "METACRITIC"]].map((s, i) => (
-              <div key={i}>
-                <div style={{ fontFamily: "var(--font-hand)", fontSize: 32, color: "var(--accent)", fontWeight: 700, lineHeight: 1 }}>{s[0]}</div>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted-dark)", letterSpacing: "0.14em", marginTop: 4 }}>{s[1]}</div>
-              </div>
+            {[
+              { value: "2.4M", label: "HUNTERS" },
+              { value: "10",   label: "ROSTER" },
+              { value: "247K", label: "ONLINE" },
+              { value: "9.4",  label: "METACRITIC" },
+            ].map((s) => (
+              <StatBlock key={s.label} value={s.value} label={s.label} />
             ))}
           </div>
         </div>
-        <div style={{ position: "relative", minHeight: 460 }}>
-          <Img className="hero-media" label="HERO PORTRAIT · KIRA-07 · neon rim light">
-            <Kanji size="huge" muted style={{ position: "absolute", top: 30, right: 30, color: "var(--accent)", opacity: 0.6, fontSize: "min(200px, 24vw)" }}>斬</Kanji>
-            <div style={{ position: "absolute", bottom: 20, left: 20, right: 20, padding: 16, border: "1px solid var(--accent)", background: "#000a", backdropFilter: "blur(8px)" }}>
-              <div className="row" style={{ alignItems: "baseline", justifyContent: "space-between", gap: 8, flexWrap: "wrap" }}>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.16em" }}>HUNTER 01 / 10</div>
-                <Tag variant="accent">ASSAULT</Tag>
-              </div>
-              <div style={{ fontFamily: "var(--font-hand)", fontWeight: 700, fontSize: 34, color: "var(--paper)", marginTop: 4 }}>KIRA-07</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-dark)", marginTop: 4 }}>"PHASE BLADE" · I-FRAME DASH 1.5s</div>
-            </div>
-          </Img>
-        </div>
+        <HunterPreviewPanel
+          index={1}
+          total={10}
+          role="ASSAULT"
+          name="KIRA-07"
+          kanji="斬"
+          sig={'"PHASE BLADE" · I-FRAME DASH 1.5s'}
+          imageLabel="HERO PORTRAIT · KIRA-07 · neon rim light"
+        />
       </div>
     </section>
 
@@ -85,20 +87,14 @@ export const PageHome = () => (
           { n: "III", t: "CYBERWARE LOOT",     k: "改", d: "40+ implants · install mid-match" },
           { n: "IV",  t: "5-STACK SQUADS",     k: "組", d: "Voice ping · callouts · role bonus XP", rev: true },
         ].map((f, i) => (
-          <div key={i} className={`pillar ${f.rev ? "reverse" : ""}`}>
-            <div className="pillar-art">
-              <Kanji size="huge" muted style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--accent)", opacity: 0.5, fontSize: 140 }}>{f.k}</Kanji>
-            </div>
-            <div className="pillar-body">
-              <div className="row" style={{ alignItems: "baseline", gap: 14 }}>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--accent)", letterSpacing: "0.18em" }}>PILLAR · {f.n}</span>
-                <div style={{ flex: 1, height: 1, background: "var(--border-dark)" }} />
-              </div>
-              <h3 className="pillar-title">{f.t}</h3>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-dark)", letterSpacing: "0.06em", marginBottom: 12 }}>{f.d}</div>
-              <Lines count={3} widths={["100%", "92%", "70%"]} />
-            </div>
-          </div>
+          <Pillar
+            key={i}
+            number={f.n}
+            title={f.t}
+            kanji={f.k}
+            description={f.d}
+            reverse={f.rev}
+          />
         ))}
       </div>
     </section>
@@ -140,15 +136,8 @@ export const PageHome = () => (
             <span style={{ marginLeft: "auto", fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.14em" }}>10/10 UNLOCKED</span>
           </div>
           <div className="grid-5">
-            {HUNTERS.map((h, i) => (
-              <div key={i} className={`hunter-card ${h.selected ? "selected" : ""}`}>
-                <Kanji className="kanji">{h.k}</Kanji>
-                <div className="meta">
-                  <div className="hname">{h.name}</div>
-                  <div className="hrole">{h.role}</div>
-                </div>
-                {h.isNew && <span className="new-flag">NEW</span>}
-              </div>
+            {HUNTERS.map((h) => (
+              <HunterCard key={h.id} hunter={h} />
             ))}
           </div>
           <div className="box dark" style={{ padding: 16 }}>

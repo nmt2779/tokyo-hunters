@@ -15,6 +15,18 @@ import {
   Ticker,
   TopNav,
 } from "../_components/wireframe-primitives";
+import { ActCard } from "../_components/ui/ActCard";
+import { HunterCard, type Hunter } from "../_components/ui/HunterCard";
+import { HunterPreviewPanel } from "../_components/ui/HunterPreviewPanel";
+import { Pillar } from "../_components/ui/Pillar";
+import { StatBlock } from "../_components/ui/StatBlock";
+
+const SAMPLE_HUNTERS: Hunter[] = [
+  { id: "kira",  name: "KIRA-07", k: "斬", role: "ASSAULT", sig: "Phase Blade · 1.5s i-frame dash" },
+  { id: "oni",   name: "ONI",     k: "鬼", role: "CONTROL", sig: "Kinetic Wall · deployable cover", selected: true },
+  { id: "ghost", name: "GHOST",   k: "影", role: "RECON",   sig: "Spectral Scan · 30m wallhack" },
+  { id: "zen",   name: "ZEN",     k: "禅", role: "RECON",   sig: "Time Echo · rewind 4s", isNew: true },
+];
 
 const COLOR_TOKENS = [
   { name: "--accent",      value: "#ff2a3d", use: "CTA, danger, kanji highlight, 1 detail/section" },
@@ -305,25 +317,91 @@ export default function DesignSystemPage() {
         <Ticker items={["DESIGN SYSTEM v0.1", "12 TOKENS", "8 PRIMITIVES", "5 PATTERNS", "東京狩人", "READ THE RULES"]} />
       </section>
 
-      {/* === TODO COMPONENTS === */}
-      <SectionBreak ch="10" title="TO BE BUILT" jp="未完" />
+      {/* === DOMAIN COMPONENTS === */}
+      <SectionBreak ch="10" title="DOMAIN COMPONENTS" jp="部品" />
       <section className="th-section alt" style={sectionStyle}>
-        <SectionHead num="10 / BACKLOG" jp="予定" title="DOMAIN" titleAccent="COMPONENTS." />
-        <div style={subHeadStyle}>EXTRACT FROM INLINE · These patterns repeat — should become components</div>
-        <div className="grid-2">
-          {[
-            { name: "<HunterCard />",         from: "wireframe-home.jsx — hunter grid",  uses: "10 cards × /hunters page" },
-            { name: "<StatBlock />",          from: "wireframe-home.jsx:51",             uses: "4 stat blocks × multi page" },
-            { name: "<ActCard />",            from: "wireframe-pages-1.jsx:51",          uses: "3 act cards × game page" },
-            { name: "<Pillar />",             from: "wireframe-home.jsx:88",             uses: "4 pillars × multi page" },
-            { name: "<HunterPreviewPanel />", from: "wireframe-home.jsx:60-70",          uses: "Hero panel · 1× but complex" },
-          ].map((c) => (
-            <div key={c.name} className="box dashed" style={{ padding: 20, background: "transparent", borderColor: "var(--border-dark)" }}>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--accent)", letterSpacing: "0.06em" }}>{c.name}</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-dark)", marginTop: 8 }}>SOURCE · {c.from}</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", marginTop: 4 }}>USED · {c.uses}</div>
-            </div>
-          ))}
+        <SectionHead num="10 / DOMAIN" jp="部品" title="GAME-SPECIFIC" titleAccent="COMPONENTS." />
+        <div style={subHeadStyle}>BUILT · 5 / 5 · All extracted from inline JSX</div>
+
+        {/* HunterCard */}
+        <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
+          <Label accent>&lt;HunterCard /&gt; — app/_components/ui/HunterCard.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            VARIANT · grid (default) — for home roster · selectable, no link
+          </div>
+          <div className="grid-4" style={{ marginTop: 18 }}>
+            {SAMPLE_HUNTERS.map((h) => (
+              <HunterCard key={h.id} hunter={h} />
+            ))}
+          </div>
+
+          <div style={{ marginTop: 24, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            VARIANT · list — for /hunters page · taller, indexed, shows sig, links to /hunters/[id]
+          </div>
+          <div className="grid-4" style={{ marginTop: 18 }}>
+            {SAMPLE_HUNTERS.map((h, i) => (
+              <HunterCard key={h.id} hunter={h} variant="list" index={i + 1} />
+            ))}
+          </div>
+        </div>
+
+        {/* Pillar */}
+        <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
+          <Label accent>&lt;Pillar /&gt; — app/_components/ui/Pillar.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            STATES · default · reverse · with custom body via children
+          </div>
+          <div className="col" style={{ gap: 16, marginTop: 18 }}>
+            <Pillar number="I" title="100-PLAYER ROYALE" kanji="戦" description="20 squads · 1 city · 30-minute match" />
+            <Pillar number="II" title="10 UNIQUE HUNTERS" kanji="鬼" description="Four roles · ranked queue · hand-tuned kits" reverse />
+          </div>
+        </div>
+
+        {/* StatBlock */}
+        <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
+          <Label accent>&lt;StatBlock /&gt; — app/_components/ui/StatBlock.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            VALUE · hand · ACCENT &nbsp;·&nbsp; LABEL · mono · MUTED
+          </div>
+          <div className="hero-stats" style={{ marginTop: 18 }}>
+            <StatBlock value="2.4M" label="HUNTERS" />
+            <StatBlock value="10"   label="ROSTER" />
+            <StatBlock value="247K" label="ONLINE" />
+            <StatBlock value="9.4"  label="METACRITIC" />
+          </div>
+        </div>
+
+        {/* ActCard */}
+        <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
+          <Label accent>&lt;ActCard /&gt; — app/_components/ui/ActCard.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            USE · timeline phase, sequenced steps, chaptered content
+          </div>
+          <div className="grid-3" style={{ marginTop: 18 }}>
+            <ActCard phase="ACT I"   title="DROP & LOOT"   time="0:00 – 8:00"   kanji="拾" description="Spawn in 1 of 20 mirrored zones. Loot baseline gear at your own pace." />
+            <ActCard phase="ACT II"  title="CONVERGE"      time="8:00 – 20:00"  kanji="集" description="Zone barriers drop. Pick your fights for premium loot." />
+            <ActCard phase="ACT III" title="FINAL CIRCLE"  time="20:00 – 30:00" kanji="勝" description="Neon ring collapses. Last squad standing wins." />
+          </div>
+        </div>
+
+        {/* HunterPreviewPanel */}
+        <div className="box dark" style={{ padding: 28 }}>
+          <Label accent>&lt;HunterPreviewPanel /&gt; — app/_components/ui/HunterPreviewPanel.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            COMPOSITE · Img + bg Kanji + glass overlay panel
+          </div>
+          <div style={{ marginTop: 18, maxWidth: 540 }}>
+            <HunterPreviewPanel
+              index={1}
+              total={10}
+              role="ASSAULT"
+              name="KIRA-07"
+              kanji="斬"
+              sig={'"PHASE BLADE" · I-FRAME DASH 1.5s'}
+              imageLabel="HERO PORTRAIT · KIRA-07 · neon rim light"
+              minHeight={420}
+            />
+          </div>
         </div>
       </section>
 
