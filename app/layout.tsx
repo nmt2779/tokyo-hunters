@@ -31,9 +31,26 @@ const notoJp = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "TokyoHunters · 100 IN. 1 OUT.",
+  metadataBase: new URL("https://tokyohunters.example"),
+  title: {
+    default: "Tokyo Hunters · 100 IN. 1 OUT.",
+    template: "%s · Tokyo Hunters",
+  },
   description:
-    "TokyoHunters — 100-player royale set in neon Tokyo, 2100. Drop. Adapt. Outlast.",
+    "100-player royale set in neo-Tokyo 2100. 20 squads, 2 combat belts, one contested center. Free to play. Drops 06.15.26.",
+  openGraph: {
+    title: "Tokyo Hunters · 100 IN. 1 OUT.",
+    description:
+      "100-player royale set in neo-Tokyo 2100. Drops 06.15.26.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tokyo Hunters · 100 IN. 1 OUT.",
+    description:
+      "100-player royale set in neo-Tokyo 2100. Drops 06.15.26.",
+  },
 };
 
 export default function RootLayout({

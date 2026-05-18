@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Kanji, Lines } from "../wireframe-primitives";
 import type { ReactNode } from "react";
 
@@ -7,6 +8,8 @@ export const Pillar = ({
   kanji,
   description,
   reverse,
+  imageSrc,
+  imageAlt,
   children,
 }: {
   number: string;
@@ -14,10 +17,32 @@ export const Pillar = ({
   kanji: string;
   description: string;
   reverse?: boolean;
+  imageSrc?: string;
+  imageAlt?: string;
   children?: ReactNode;
 }) => (
   <div className={`pillar ${reverse ? "reverse" : ""}`}>
     <div className="pillar-art">
+      {imageSrc && (
+        <>
+          <Image
+            src={imageSrc}
+            alt={imageAlt ?? title}
+            fill
+            sizes="(max-width: 820px) 100vw, 380px"
+            style={{ objectFit: "cover" }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(180deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.55) 100%)",
+              pointerEvents: "none",
+            }}
+          />
+        </>
+      )}
       <Kanji
         size="huge"
         muted
@@ -28,8 +53,10 @@ export const Pillar = ({
           alignItems: "center",
           justifyContent: "center",
           color: "var(--accent)",
-          opacity: 0.5,
+          opacity: imageSrc ? 0.85 : 0.5,
           fontSize: 140,
+          textShadow: imageSrc ? "0 4px 24px rgba(0,0,0,0.6)" : undefined,
+          pointerEvents: "none",
         }}
       >
         {kanji}

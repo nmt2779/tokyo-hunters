@@ -1,7 +1,9 @@
+"use client";
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* th-shared.tsx — primitives, nav, footer, logo */
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 
 type Style = CSSProperties | undefined;
@@ -207,26 +209,40 @@ export const NAV_ITEMS: { id: RouteKey; label: string }[] = [
   { id: "patch",     label: "PATCH NOTES" },
 ];
 
-export const TopNav = ({ active = "home" }: { active?: RouteKey }) => (
-  <nav className="th-nav" aria-label="Primary navigation">
-    <Logo />
-    <div className="nav-links">
-      {NAV_ITEMS.map((it) => (
-        <Link
-          key={it.id}
-          className={`nav-link ${active === it.id ? "active" : ""}`}
-          href={ROUTES[it.id]}
-        >
-          {it.label}
-        </Link>
-      ))}
-    </div>
-    <div className="nav-cta">
-      <Btn variant="primary" href="/game">► PLAY FREE</Btn>
-      <span className="hamburger">≡</span>
-    </div>
-  </nav>
-);
+export const TopNav = ({ active = "home" }: { active?: RouteKey }) => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <nav
+      className={`th-nav${scrolled ? " th-nav--scrolled" : ""}`}
+      aria-label="Primary navigation"
+    >
+      <Logo />
+      <div className="nav-links">
+        {NAV_ITEMS.map((it) => (
+          <Link
+            key={it.id}
+            className={`nav-link ${active === it.id ? "active" : ""}`}
+            href={ROUTES[it.id]}
+          >
+            {it.label}
+          </Link>
+        ))}
+      </div>
+      <div className="nav-cta">
+        <Btn variant="primary" href="/game">► PLAY FREE</Btn>
+        <span className="hamburger">≡</span>
+      </div>
+    </nav>
+  );
+};
 
 export const SectionHead = ({
   num,
@@ -239,7 +255,11 @@ export const SectionHead = ({
   jp: string;
   title: string;
   titleAccent?: string;
-  lede?: boolean;
+  /**
+   * Lede paragraph under the title. Pass a string / JSX for real copy,
+   * or `true` for a Lines skeleton placeholder.
+   */
+  lede?: ReactNode | true;
 }) => (
   <>
     <div className="th-sec-head">
@@ -250,11 +270,13 @@ export const SectionHead = ({
     <h2 className="th-sec-title">
       {title} {titleAccent && <span className="accent">{titleAccent}</span>}
     </h2>
-    {lede && (
+    {lede === true ? (
       <div className="th-sec-lede">
         <Lines count={2} widths={["100%", "70%"]} />
       </div>
-    )}
+    ) : lede ? (
+      <div className="th-sec-lede">{lede}</div>
+    ) : null}
   </>
 );
 
@@ -275,13 +297,19 @@ export const SectionBreak = ({
   </div>
 );
 
-export const Ticker = ({ items }: { items: string[] }) => (
-  <div className="th-ticker">
-    {Array.from({ length: 4 }).map((_, i) => (
-      <span key={i}>{items.join(" · ")} ·</span>
-    ))}
-  </div>
-);
+export const Ticker = ({ items }: { items: string[] }) => {
+  // Render the items twice — animation translates -50% so the second copy
+  // arrives exactly where the first started, looping seamlessly.
+  const line = items.join("  ·  ") + "  ·  ";
+  return (
+    <div className="th-ticker" aria-label="Status ticker">
+      <div className="th-ticker-track">
+        <span>{line}</span>
+        <span aria-hidden="true">{line}</span>
+      </div>
+    </div>
+  );
+};
 
 export const Footer = () => (
   <div className="th-footer">

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Kanji } from "../wireframe-primitives";
 
@@ -9,6 +10,10 @@ export type Hunter = {
   sig?: string;
   selected?: boolean;
   isNew?: boolean;
+  /** Full-body hero / splash art (3:4). Used by HunterCard and big preview. */
+  imageSrc?: string;
+  /** Bust / head-and-shoulders avatar (1:1). Used by HunterAvatar. Falls back to imageSrc. */
+  avatarSrc?: string;
 };
 
 type Props = {
@@ -24,6 +29,33 @@ export const HunterCard = (props: Props) => {
 
   const body = (
     <>
+      {hunter.imageSrc && (
+        <>
+          <Image
+            src={hunter.imageSrc}
+            alt={hunter.name}
+            fill
+            sizes="(max-width: 720px) 50vw, 220px"
+            style={{
+              objectFit: "cover",
+              // Keep the face in frame regardless of card aspect ratio.
+              // Portraits are 3:4 / 5:6 — focal point is upper third.
+              objectPosition: "center 20%",
+              zIndex: 0,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(180deg, rgba(10,13,18,0.15) 0%, rgba(10,13,18,0.75) 100%)",
+              pointerEvents: "none",
+              zIndex: 1,
+            }}
+          />
+        </>
+      )}
       {isList && (
         <div
           style={{
@@ -34,6 +66,7 @@ export const HunterCard = (props: Props) => {
             fontSize: 9,
             color: "var(--accent)",
             letterSpacing: "0.14em",
+            zIndex: 2,
           }}
         >
           {String(props.index).padStart(2, "0")}
@@ -41,11 +74,21 @@ export const HunterCard = (props: Props) => {
       )}
       <Kanji
         size="huge"
-        style={isList ? { fontSize: "clamp(56px, 8vw, 96px)" } : undefined}
+        style={{
+          ...(isList ? { fontSize: "clamp(56px, 8vw, 96px)" } : undefined),
+          ...(hunter.imageSrc
+            ? {
+                opacity: 0.85,
+                color: "var(--accent)",
+                textShadow: "0 4px 16px rgba(0,0,0,0.6)",
+                zIndex: 2,
+              }
+            : undefined),
+        }}
       >
         {hunter.k}
       </Kanji>
-      <div className="meta">
+      <div className="meta" style={{ zIndex: 2 }}>
         <div className="hname" style={isList ? { fontSize: 13 } : undefined}>
           {hunter.name}
         </div>
@@ -75,7 +118,7 @@ export const HunterCard = (props: Props) => {
       <Link
         className="hunter-card"
         href={`/hunters/${hunter.id}`}
-        style={{ aspectRatio: "1 / 1.35", cursor: "pointer", textDecoration: "none" }}
+        style={{ cursor: "pointer", textDecoration: "none" }}
       >
         {body}
       </Link>
