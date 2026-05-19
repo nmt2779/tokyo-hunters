@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ViewTransition } from "react";
 import { Img, Kanji, Tag } from "../wireframe-primitives";
 
 export const HunterPreviewPanel = ({
@@ -12,6 +14,8 @@ export const HunterPreviewPanel = ({
   imageSrc,
   imageAlt,
   minHeight = 460,
+  href,
+  viewTransitionName,
 }: {
   index: number;
   total: number;
@@ -23,6 +27,8 @@ export const HunterPreviewPanel = ({
   imageSrc?: string;
   imageAlt?: string;
   minHeight?: number;
+  href?: string;
+  viewTransitionName?: string;
 }) => {
   const idx = String(index).padStart(2, "0");
   const tot = String(total).padStart(2, "0");
@@ -73,26 +79,45 @@ export const HunterPreviewPanel = ({
   );
 
   if (imageSrc) {
+    const Wrapper = href ? Link : "div";
+    const wrapperProps = href
+      ? { href, "aria-label": `View ${name} hunter details` }
+      : {};
     return (
-      <div
-        className="hero-media"
+      <Wrapper
+        {...(wrapperProps as { href: string; "aria-label": string })}
+        className={`hero-media${href ? " hero-media--link" : ""}`}
         style={{
           position: "relative",
           minHeight,
           border: "1.5px solid var(--border-dark)",
           overflow: "hidden",
+          display: "block",
         }}
       >
-        <Image
-          src={imageSrc}
-          alt={imageAlt ?? name}
-          fill
-          priority
-          sizes="(max-width: 820px) 100vw, 540px"
-          style={{ objectFit: "cover" }}
-        />
+        {viewTransitionName ? (
+          <ViewTransition name={viewTransitionName} share="morph">
+            <Image
+              src={imageSrc}
+              alt={imageAlt ?? name}
+              fill
+              priority
+              sizes="(max-width: 820px) 100vw, 540px"
+              style={{ objectFit: "cover" }}
+            />
+          </ViewTransition>
+        ) : (
+          <Image
+            src={imageSrc}
+            alt={imageAlt ?? name}
+            fill
+            priority
+            sizes="(max-width: 820px) 100vw, 540px"
+            style={{ objectFit: "cover" }}
+          />
+        )}
         {overlay}
-      </div>
+      </Wrapper>
     );
   }
 

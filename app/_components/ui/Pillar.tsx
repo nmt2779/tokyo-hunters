@@ -54,7 +54,7 @@ export const Pillar = ({
           justifyContent: "center",
           color: "var(--accent)",
           opacity: imageSrc ? 0.85 : 0.5,
-          fontSize: 140,
+          fontSize: "clamp(80px, 11vw, 160px)",
           textShadow: imageSrc ? "0 4px 24px rgba(0,0,0,0.6)" : undefined,
           pointerEvents: "none",
         }}

@@ -1,15 +1,17 @@
+import type { ReactNode } from "react";
+
 export const StatBlock = ({
   value,
   label,
 }: {
-  value: string;
+  value: ReactNode;
   label: string;
 }) => (
-  <div>
+  <div className="stat-block">
     <div
       style={{
         fontFamily: "var(--font-hand)",
-        fontSize: 32,
+        fontSize: "clamp(24px, 3.2vw, 36px)",
         color: "var(--accent)",
         fontWeight: 700,
         lineHeight: 1,

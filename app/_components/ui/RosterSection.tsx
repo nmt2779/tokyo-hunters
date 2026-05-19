@@ -160,7 +160,7 @@ export const RosterSection = ({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(76px, 1fr))",
             gap: 10,
           }}
         >
