@@ -1,33 +1,40 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Kanji } from "../wireframe-primitives";
 import type { Hunter } from "./HunterCard";
 
 export const HunterAvatar = ({
   hunter,
   selected,
-  onClick,
+  onHover,
 }: {
   hunter: Hunter;
   selected?: boolean;
-  onClick?: () => void;
+  /**
+   * Fired on mouse enter / keyboard focus.
+   * Use this to live-update a parent preview while the user browses.
+   * Clicking the avatar always navigates to the hunter detail page.
+   */
+  onHover?: () => void;
 }) => {
   const src = hunter.avatarSrc ?? hunter.imageSrc;
   return (
-    <button
-      type="button"
-      onClick={onClick}
+    <Link
+      href={`/hunters/${hunter.id}`}
+      onMouseEnter={onHover}
+      onFocus={onHover}
       className={`hunter-avatar${selected ? " selected" : ""}`}
-      aria-pressed={selected}
-      aria-label={`Select ${hunter.name}`}
+      aria-label={`View ${hunter.name} dossier`}
+      data-selected={selected ? "true" : undefined}
     >
       {src && (
         <Image
           src={src}
           alt=""
           fill
-          sizes="120px"
+          sizes="160px"
           style={{ objectFit: "cover", objectPosition: "center 20%" }}
         />
       )}
@@ -36,6 +43,6 @@ export const HunterAvatar = ({
       </span>
       {hunter.isNew && <span className="new-tag">NEW</span>}
       <span className="name">{hunter.name}</span>
-    </button>
+    </Link>
   );
 };

@@ -169,7 +169,7 @@ export const RosterSection = ({
               key={h.id}
               hunter={h}
               selected={h.id === selected.id}
-              onClick={() => setSelectedId(h.id)}
+              onHover={() => setSelectedId(h.id)}
             />
           ))}
         </div>

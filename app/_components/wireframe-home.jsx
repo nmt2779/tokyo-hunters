@@ -29,16 +29,16 @@ import { Pillar } from "./ui/Pillar";
 import { StatBlock } from "./ui/StatBlock";
 
 export const HUNTERS = [
-  { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT",  sig: "Phase Blade · 1.5s i-frame dash" },
-  { id: "oni",    name: "ONI",     k: "鬼", role: "CONTROL",  sig: "Kinetic Wall · deployable cover", selected: true, imageSrc: "/art/hunters/oni.png" },
-  { id: "ghost",  name: "GHOST",   k: "影", role: "RECON",    sig: "Spectral Scan · 30m wallhack",    imageSrc: "/art/hunters/ghost.png" },
-  { id: "medic",  name: "MEDIC-9", k: "癒", role: "SUPPORT",  sig: "Nano-Mist · squad heal AOE" },
-  { id: "ronin",  name: "RONIN",   k: "侍", role: "ASSAULT",  sig: "Twin Katana · execute proc",      imageSrc: "/art/hunters/ronin.png" },
-  { id: "moth",   name: "MOTH",    k: "蛾", role: "RECON",    sig: "Drone Swarm · vision uplink" },
-  { id: "fuji",   name: "FUJI",    k: "藤", role: "CONTROL",  sig: "Vine Trap · root + dmg" },
-  { id: "nova",   name: "NOVA",    k: "星", role: "SUPPORT",  sig: "Resurrect Beam · revive ally",    imageSrc: "/art/hunters/nova.png" },
-  { id: "raijin", name: "RAIJIN",  k: "雷", role: "ASSAULT",  sig: "Storm Burst · chain dmg",         imageSrc: "/art/hunters/raijin.png" },
-  { id: "zen",    name: "ZEN",     k: "禅", role: "RECON",    sig: "Time Echo · rewind 4s", isNew: true, imageSrc: "/art/hunters/zen.png" },
+  { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT", sig: "Phase Blade · 1.5s i-frame dash",   imageSrc: "/art/hunters/kira-07.png", avatarSrc: "/art/hunter-avatars/kira-07.png" },
+  { id: "oni",    name: "ONI",     k: "鬼", role: "CONTROL", sig: "Kinetic Wall · deployable cover",  selected: true, imageSrc: "/art/hunters/oni.png",     avatarSrc: "/art/hunter-avatars/oni.png" },
+  { id: "ghost",  name: "GHOST",   k: "影", role: "RECON",   sig: "Spectral Scan · 30m wallhack",     imageSrc: "/art/hunters/ghost.png",   avatarSrc: "/art/hunter-avatars/ghost.png" },
+  { id: "medic",  name: "MEDIC-9", k: "癒", role: "SUPPORT", sig: "Nano-Mist · squad heal AOE",       imageSrc: "/art/hunters/medic-9.png", avatarSrc: "/art/hunter-avatars/medic-9.png" },
+  { id: "ronin",  name: "RONIN",   k: "侍", role: "ASSAULT", sig: "Twin Katana · execute proc",       imageSrc: "/art/hunters/ronin.png",   avatarSrc: "/art/hunter-avatars/ronin.png" },
+  { id: "moth",   name: "MOTH",    k: "蛾", role: "RECON",   sig: "Drone Swarm · vision uplink",      imageSrc: "/art/hunters/moth.png",    avatarSrc: "/art/hunter-avatars/moth.png" },
+  { id: "fuji",   name: "FUJI",    k: "藤", role: "CONTROL", sig: "Vine Trap · root + dmg",           imageSrc: "/art/hunters/fuji.png",    avatarSrc: "/art/hunter-avatars/fuji.png" },
+  { id: "nova",   name: "NOVA",    k: "星", role: "SUPPORT", sig: "Resurrect Beam · revive ally",     imageSrc: "/art/hunters/nova.png",    avatarSrc: "/art/hunter-avatars/nova.png" },
+  { id: "raijin", name: "RAIJIN",  k: "雷", role: "ASSAULT", sig: "Storm Burst · chain dmg",          imageSrc: "/art/hunters/raijin.png",  avatarSrc: "/art/hunter-avatars/raijin.png" },
+  { id: "zen",    name: "ZEN",     k: "禅", role: "RECON",   sig: "Time Echo · rewind 4s",            isNew: true, imageSrc: "/art/hunters/zen.png",     avatarSrc: "/art/hunter-avatars/zen.png" },
 ];
 
 export const PageHome = () => (
