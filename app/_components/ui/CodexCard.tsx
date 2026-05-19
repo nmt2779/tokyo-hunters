@@ -25,10 +25,6 @@ export const CodexCard = ({ item }: { item: CodexItem }) => (
       style={{
         position: "relative",
         overflow: "hidden",
-        // Override .codex-card .art height: 100px from globals.css so square
-        // MJ assets render uncropped.
-        height: "auto",
-        aspectRatio: "1 / 1",
       }}
     >
       {item.imageSrc && (

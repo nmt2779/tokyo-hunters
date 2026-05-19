@@ -30,6 +30,18 @@
   --gutter: clamp(16px, 4vw, 56px);
   --content-max-w: 1680px;
   --content-pad-x: max(var(--gutter), calc((100vw - 1680px) / 2));
+
+  /* motion tokens — keep in sync with app/_lib/motion.ts */
+  --motion-fast: 180ms;
+  --motion-base: 320ms;
+  --motion-slow: 520ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --stagger-tight: 60ms;
+  --stagger-base: 90ms;
+  --stagger-loose: 140ms;
+
+  --section-gap: clamp(48px, 7vw, 96px);
 }
 
 * { box-sizing: border-box; }
@@ -365,8 +377,8 @@ body.no-jp .kanji { display: none !important; }
 /* horizontal padding clamps to keep inner content max ~1440px wide */
 .th-section {
   position: relative;
-  padding-top: clamp(40px, 7vw, 96px);
-  padding-bottom: clamp(40px, 7vw, 96px);
+  padding-top: var(--section-gap);
+  padding-bottom: var(--section-gap);
   padding-left: var(--content-pad-x);
   padding-right: var(--content-pad-x);
 }
@@ -533,7 +545,6 @@ body.no-jp .kanji { display: none !important; }
 }
 .th-ticker-track {
   display: flex;
-  gap: 28px;
   width: max-content;
   animation: ticker-scroll 45s linear infinite;
   will-change: transform;
@@ -708,10 +719,9 @@ body.no-jp .kanji { display: none !important; }
 .hero-stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 36px;
+  gap: clamp(20px, 3vw, 36px);
   margin-top: 32px;
 }
-@media (max-width: 720px) { .hero-stats { gap: 24px; } }
 
 /* hunter portrait card */
 .hunter-card {
@@ -805,7 +815,8 @@ body.no-jp .kanji { display: none !important; }
   flex-direction: column;
 }
 .codex-card .art {
-  height: 100px;
+  aspect-ratio: 1 / 1;
+  height: auto;
   margin: 12px 0;
   position: relative;
   border: 1px dashed var(--border-dark);
@@ -847,6 +858,23 @@ body.no-jp .kanji { display: none !important; }
   min-height: 0 !important;
   height: auto !important;
 }
+.hero-media--link {
+  cursor: pointer;
+  transition: border-color 180ms ease, transform 220ms ease;
+}
+.hero-media--link:hover {
+  border-color: var(--accent);
+}
+.hero-media--link:hover img {
+  transform: scale(1.02);
+}
+.hero-media--link img {
+  transition: transform 320ms ease;
+}
+.hero-media--link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 /* mode chip pills */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -872,8 +900,6 @@ body.no-jp .kanji { display: none !important; }
 .vp-dt { --canvas-w: auto; }
 .vp-tab { --canvas-w: 768px; }
 .vp-mob { --canvas-w: 390px; }
-
-@keyframes blink { 50% { opacity: 0; } }
 
 /* ---------- Next implementation shell for TokyoHunters Wireframes.html ---------- */
 .tokyo-wireframes {
@@ -1130,4 +1156,116 @@ body.vp-mob .dist-row,
 body.vp-mob .dist-row > span:nth-last-child(-n + 2),
 .tokyo-wireframes.vp-mob .dist-row > span:nth-last-child(-n + 2) {
   display: none;
+}
+
+/* ============================================================
+   MICRO-INTERACTIONS — hover/focus states
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .btn {
+    transition:
+      background var(--motion-fast) var(--ease-out),
+      border-color var(--motion-fast) var(--ease-out),
+      color var(--motion-fast) var(--ease-out),
+      transform var(--motion-fast) var(--ease-out),
+      box-shadow var(--motion-base) var(--ease-out);
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(255, 42, 61, 0.18);
+  }
+  .btn:active { transform: translateY(0); box-shadow: none; }
+  .btn.primary:hover { background: color-mix(in srgb, var(--accent) 88%, #fff); }
+  .btn.ghost:hover { background: rgba(255, 255, 255, 0.04); border-color: var(--accent); color: var(--accent); }
+  .btn.dark:hover { background: var(--bg-dark-2); border-color: var(--accent); }
+
+  .tag {
+    transition:
+      background var(--motion-fast) var(--ease-out),
+      border-color var(--motion-fast) var(--ease-out),
+      color var(--motion-fast) var(--ease-out);
+  }
+  .tag.ghost-dark:hover { border-color: var(--accent); color: var(--paper); }
+
+  .hunter-card {
+    transition:
+      transform var(--motion-base) var(--ease-out),
+      border-color var(--motion-fast) var(--ease-out),
+      box-shadow var(--motion-base) var(--ease-out);
+  }
+  .hunter-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  .hunter-card:hover .kanji { opacity: 0.9; }
+
+  .codex-card {
+    transition:
+      transform var(--motion-base) var(--ease-out),
+      border-color var(--motion-fast) var(--ease-out),
+      box-shadow var(--motion-base) var(--ease-out);
+  }
+  .codex-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  }
+  .codex-card:hover .kanji { opacity: 0.7; }
+
+  .pillar {
+    transition: border-color var(--motion-fast) var(--ease-out);
+  }
+  .pillar:hover { border-color: var(--accent); }
+
+  .media-trailer,
+  .media-thumbs > * {
+    transition:
+      transform var(--motion-base) var(--ease-out),
+      border-color var(--motion-fast) var(--ease-out);
+    overflow: hidden;
+  }
+  .media-trailer:hover,
+  .media-thumbs > *:hover {
+    border-color: var(--accent);
+  }
+  .media-trailer img,
+  .media-thumbs img {
+    transition: transform 480ms var(--ease-out);
+  }
+  .media-trailer:hover img,
+  .media-thumbs > *:hover img {
+    transform: scale(1.03);
+  }
+
+  .stat-block {
+    transition: transform var(--motion-fast) var(--ease-out);
+  }
+  .stat-block:hover { transform: translateY(-2px); }
+}
+
+/* focus-visible — always on, regardless of motion preference */
+.btn:focus-visible,
+.tag:focus-visible,
+.hunter-card:focus-visible,
+.codex-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   VIEW TRANSITIONS — shared element morph (hunter portrait)
+   ============================================================ */
+::view-transition-group(.morph) {
+  animation-duration: 420ms;
+  animation-timing-function: var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }

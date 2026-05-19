@@ -6,10 +6,8 @@ import {
   Btn,
   Footer,
   HeroCTAs,
-  Img,
   Kanji,
   Label,
-  Lines,
   SectionBreak,
   SectionHead,
   Tag,
@@ -20,13 +18,17 @@ import Image from "next/image";
 import { CodexCard } from "./ui/CodexCard";
 import { Countdown } from "./ui/Countdown";
 import { EmailSignup } from "./ui/EmailSignup";
-import { HunterCard } from "./ui/HunterCard";
 import { HunterPreviewPanel } from "./ui/HunterPreviewPanel";
 import { MediaThumb } from "./ui/MediaThumb";
 import { RosterSection } from "./ui/RosterSection";
 import { ScrollToTop } from "./ui/ScrollToTop";
 import { Pillar } from "./ui/Pillar";
 import { StatBlock } from "./ui/StatBlock";
+import { Reveal } from "./motion/Reveal";
+import { Stagger } from "./motion/Stagger";
+import { MountReveal } from "./motion/MountReveal";
+import { ParallaxKanji } from "./motion/ParallaxKanji";
+import { CountUp } from "./motion/CountUp";
 
 export const HUNTERS = [
   { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT", sig: "Phase Blade · 1.5s i-frame dash",   imageSrc: "/art/hunters/kira-07.png", avatarSrc: "/art/hunter-avatars/kira-07.png" },
@@ -49,39 +51,57 @@ export const PageHome = () => (
     <section className="th-section flat" style={{ paddingTop: "clamp(28px, 4vw, 56px)", paddingBottom: "clamp(28px, 4vw, 56px)" }}>
       <div className="split image-r">
         <div className="col" style={{ position: "relative", justifyContent: "center" }}>
-          <Kanji size="huge" muted style={{ position: "absolute", top: -30, left: -30, color: "var(--paper)", opacity: 0.05, fontSize: 320 }}>狩</Kanji>
-          <Tag variant="accent" style={{ alignSelf: "flex-start" }}>SEASON 0 · OPERATION KIRIN · LIVE</Tag>
+          <ParallaxKanji style={{ position: "absolute", top: -30, left: -30, pointerEvents: "none" }} range={80}>
+            <Kanji size="huge" muted style={{ color: "var(--paper)", opacity: 0.05, fontSize: 320 }}>狩</Kanji>
+          </ParallaxKanji>
+          <MountReveal delay={0.08} y={12}>
+            <Tag variant="accent" style={{ alignSelf: "flex-start" }}>SEASON 0 · OPERATION KIRIN · LIVE</Tag>
+          </MountReveal>
           <h1 className="h-hero" style={{ marginTop: 14 }}>
-            DROP.<br/>ADAPT.<br/><span className="accent">OUTLAST.</span>
+            <MountReveal as="span" delay={0.18} y={20} style={{ display: "block" }}>DROP.</MountReveal>
+            <MountReveal as="span" delay={0.26} y={20} style={{ display: "block" }}>ADAPT.</MountReveal>
+            <MountReveal as="span" delay={0.34} y={20} style={{ display: "block" }}>
+              <span className="accent">OUTLAST.</span>
+            </MountReveal>
           </h1>
-          <p style={{ marginTop: 18, maxWidth: 460, color: "var(--text-dark)", fontSize: 14, lineHeight: 1.6, fontFamily: "var(--font-mono)" }}>
-            Twenty squads spawn across neo-Tokyo. Push through two combat belts —
-            highway, then arcade — toward the contested center. Last team standing wins.
-            Free to play, forever. Drops <span style={{ color: "var(--accent)" }}>06.15.26</span>.
-          </p>
-          <HeroCTAs />
+          <MountReveal delay={0.48} y={12}>
+            <p style={{ marginTop: 18, maxWidth: 460, color: "var(--text-dark)", fontSize: 14, lineHeight: 1.6, fontFamily: "var(--font-mono)" }}>
+              Twenty squads spawn across neo-Tokyo. Push through two combat belts —
+              highway, then arcade — toward the contested center. Last team standing wins.
+              Free to play, forever. Drops <span style={{ color: "var(--accent)" }}>06.15.26</span>.
+            </p>
+          </MountReveal>
+          <MountReveal delay={0.58} y={12}>
+            <HeroCTAs />
+          </MountReveal>
           <div className="hero-stats">
             {[
-              { value: "2.4M", label: "HUNTERS" },
-              { value: "10",   label: "ROSTER" },
-              { value: "247K", label: "ONLINE" },
-              { value: "9.4",  label: "METACRITIC" },
-            ].map((s) => (
-              <StatBlock key={s.label} value={s.value} label={s.label} />
+              { to: 2.4, suffix: "M", decimals: 1, label: "HUNTERS" },
+              { to: 10,  suffix: "",  decimals: 0, label: "ROSTER" },
+              { to: 247, suffix: "K", decimals: 0, label: "ONLINE" },
+              { to: 9.4, suffix: "",  decimals: 1, label: "METACRITIC" },
+            ].map((s, i) => (
+              <MountReveal key={s.label} delay={0.7 + i * 0.09} y={10}>
+                <StatBlock value={<CountUp to={s.to} suffix={s.suffix} decimals={s.decimals} delay={0.1} />} label={s.label} />
+              </MountReveal>
             ))}
           </div>
         </div>
-        <HunterPreviewPanel
-          index={10}
-          total={10}
-          role="RECON"
-          name="ZEN"
-          kanji="禅"
-          sig={'"TIME ECHO" · REWIND 4s · SEASON 0 DEBUT'}
-          imageLabel="HERO PORTRAIT · ZEN · neon rim light"
-          imageSrc="/art/hunters/zen.png"
-          imageAlt="ZEN — recon hunter, Season 0 debut"
-        />
+        <MountReveal delay={0.2} y={0} duration={0.6}>
+          <HunterPreviewPanel
+            index={10}
+            total={10}
+            role="RECON"
+            name="ZEN"
+            kanji="禅"
+            sig={'"TIME ECHO" · REWIND 4s · SEASON 0 DEBUT'}
+            imageLabel="HERO PORTRAIT · ZEN · neon rim light"
+            imageSrc="/art/hunters/zen.png"
+            imageAlt="ZEN — recon hunter, Season 0 debut"
+            href="/hunters/zen"
+            viewTransitionName="hunter-portrait-zen"
+          />
+        </MountReveal>
       </div>
     </section>
 
@@ -97,7 +117,7 @@ export const PageHome = () => (
         titleAccent="SYSTEM."
         lede="Tokyo Hunters isn't a deathmatch with extra steps. Every match is a 30-minute system built on four interlocking pillars — designed so skill compounds and luck dies."
       />
-      <div className="col" style={{ gap: 20 }}>
+      <Stagger className="col" style={{ gap: 20 }} gap={0.09}>
         {[
           {
             n: "I",   t: "100-PLAYER ROYALE",  k: "戦",
@@ -126,29 +146,32 @@ export const PageHome = () => (
             rev: true,
           },
         ].map((f, i) => (
-          <Pillar
-            key={i}
-            number={f.n}
-            title={f.t}
-            kanji={f.k}
-            description={f.d}
-            reverse={f.rev}
-            imageSrc={f.img}
-            imageAlt={f.alt}
-          >
-            <p style={{ fontFamily: "var(--font-mono)", fontSize: 13, lineHeight: 1.65, color: "var(--text-dark)", margin: 0 }}>
-              {f.body}
-            </p>
-          </Pillar>
+          <Reveal key={i} direction="up" distance={24}>
+            <Pillar
+              number={f.n}
+              title={f.t}
+              kanji={f.k}
+              description={f.d}
+              reverse={f.rev}
+              imageSrc={f.img}
+              imageAlt={f.alt}
+            >
+              <p style={{ fontFamily: "var(--font-mono)", fontSize: 13, lineHeight: 1.65, color: "var(--text-dark)", margin: 0 }}>
+                {f.body}
+              </p>
+            </Pillar>
+          </Reveal>
         ))}
-      </div>
+      </Stagger>
     </section>
 
     {/* HUNTER SELECT */}
     <SectionBreak ch="03" title="HUNTER SELECT" jp="狩人選択" />
     <section className="th-section alt">
       <SectionHead num="03 / ROSTER" jp="狩人" title="TEN HUNTERS." titleAccent="ONE TOKYO." />
-      <RosterSection hunters={HUNTERS} />
+      <Reveal direction="up" distance={20} amount={0.15}>
+        <RosterSection hunters={HUNTERS} />
+      </Reveal>
     </section>
 
     {/* GAMEPLAY LOOP — 30 MIN */}
@@ -162,7 +185,7 @@ export const PageHome = () => (
             clock and bend the rhythm. Drop sealed, loot calm, upgrade smart. When the walls fall
             the only thing that matters is how prepared you were when nobody was watching.
           </p>
-          <div className="col" style={{ gap: 12, marginTop: 24 }}>
+          <Stagger className="col" style={{ gap: 12, marginTop: 24 }} gap={0.06}>
             {[
               ["DROP",     "20 teams · 20 isolated zones · loot basics safely", "落"],
               ["LOOT",     "scour your zone for weapons, mods, currency",        "拾"],
@@ -171,16 +194,18 @@ export const PageHome = () => (
               ["FIGHT",    "premium loot · cyber-shards · contested",            "戦"],
               ["SURVIVE",  "shrinking neon zone, last team wins",                "勝"],
             ].map((s, i) => (
-              <div key={i} className="row" style={{ gap: 14, alignItems: "center", padding: "10px 0", borderBottom: "1px dashed var(--border-dark)" }}>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", width: 28 }}>0{i+1}</span>
-                <Kanji size="md" accent>{s[2]}</Kanji>
-                <div style={{ fontFamily: "var(--font-hand)", fontSize: 26, fontWeight: 700, color: "var(--paper)", minWidth: 130 }}>{s[0]}</div>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted-dark)" }}>{s[1]}</div>
-              </div>
+              <Reveal key={i} direction="up" distance={12}>
+                <div className="row" style={{ gap: 14, alignItems: "center", padding: "10px 0", borderBottom: "1px dashed var(--border-dark)" }}>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", width: 28 }}>0{i+1}</span>
+                  <Kanji size="md" accent>{s[2]}</Kanji>
+                  <div style={{ fontFamily: "var(--font-hand)", fontSize: "clamp(20px, 2.4vw, 28px)", fontWeight: 700, color: "var(--paper)", minWidth: 130 }}>{s[0]}</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted-dark)" }}>{s[1]}</div>
+                </div>
+              </Reveal>
             ))}
-          </div>
+          </Stagger>
         </div>
-        <div className="box dark" style={{ minHeight: 520, position: "relative" }}>
+        <Reveal direction="up" distance={16} className="box dark" style={{ minHeight: 520, position: "relative" }}>
           <Brackets />
           <Label style={{ position: "absolute", top: 14, left: 16 }}>FIG.04 · THE LOOP</Label>
           <svg viewBox="0 0 400 400" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", padding: 30 }}>
@@ -202,7 +227,7 @@ export const PageHome = () => (
             <text x="200" y="195" textAnchor="middle" fill="var(--paper)" fontFamily="var(--font-hand)" fontSize="36" fontWeight="700">30 MIN</text>
             <text x="200" y="222" textAnchor="middle" fill="#9aa1aa" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">PER MATCH</text>
           </svg>
-        </div>
+        </Reveal>
       </div>
     </section>
 
@@ -210,7 +235,7 @@ export const PageHome = () => (
     <SectionBreak ch="05" title="LOADOUT TEASER" jp="武装一覧" />
     <section className="th-section alt">
       <SectionHead num="05 / LOADOUT" jp="武装" title="80+ WEAPONS." titleAccent="40+ CYBERWARE." />
-      <div className="grid-5">
+      <Stagger className="grid-5" gap={0.09}>
         {[
           { category: "WEAPON", name: "TANTO-X",    type: "ENERGY SMG",    rarity: "RARE",      kanji: "短", imageSrc: "/art/weapons/tanto-x.png" },
           { category: "WEAPON", name: "RAIDEN-9",   type: "RAILGUN",       rarity: "EXOTIC",    kanji: "雷", imageSrc: "/art/weapons/raiden-9.png" },
@@ -218,9 +243,11 @@ export const PageHome = () => (
           { category: "CYBER",  name: "ARGUS EYE",  type: "VISION TIER 2", rarity: "RARE",      kanji: "眼", imageSrc: "/art/cyber/argus-eye.png" },
           { category: "CYBER",  name: "TITAN ARMS", type: "COMBAT TIER 4", rarity: "LEGENDARY", kanji: "腕", imageSrc: "/art/cyber/titan-arms.png" },
         ].map((item) => (
-          <CodexCard key={item.name} item={item} />
+          <Reveal key={item.name} direction="up" distance={16}>
+            <CodexCard item={item} />
+          </Reveal>
         ))}
-      </div>
+      </Stagger>
       <div className="row" style={{ justifyContent: "center", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
         <Btn variant="primary" size="lg" href="/weapons">WEAPON CODEX →</Btn>
         <Btn variant="dark" size="lg" href="/cyberware" style={{ borderColor: "var(--paper)" }}>CYBERWARE CODEX →</Btn>
@@ -232,8 +259,8 @@ export const PageHome = () => (
     <section className="th-section">
       <SectionHead num="06 / MAP" jp="区" title="THREE PHASES." titleAccent="ONE CENTER." />
       <div className="split image-r">
-        <div>
-          <div style={{ fontFamily: "var(--font-hand)", fontSize: 26, color: "var(--paper)", lineHeight: 1.2, marginBottom: 16 }}>
+        <Reveal direction="right" distance={20} amount={0.25}>
+          <div style={{ fontFamily: "var(--font-hand)", fontSize: "clamp(20px, 2.4vw, 28px)", color: "var(--paper)", lineHeight: 1.2, marginBottom: 16 }}>
             "No random drops. Spawn in your zone. Cross two belts. Meet at the heart of Tokyo."
           </div>
           <p style={{ fontFamily: "var(--font-mono)", fontSize: 13, lineHeight: 1.65, color: "var(--text-dark)", margin: 0 }}>
@@ -256,8 +283,8 @@ export const PageHome = () => (
             ))}
           </div>
           <Btn variant="primary" size="lg" href="/map" style={{ marginTop: 20 }}>EXPLORE THE MAP →</Btn>
-        </div>
-        <div
+        </Reveal>
+        <Reveal direction="left" distance={20} amount={0.25}
           style={{
             position: "relative",
             width: "100%",
@@ -273,7 +300,7 @@ export const PageHome = () => (
             sizes="(max-width: 820px) 100vw, 540px"
             style={{ objectFit: "contain" }}
           />
-        </div>
+        </Reveal>
       </div>
     </section>
 
@@ -282,7 +309,7 @@ export const PageHome = () => (
     <section className="th-section alt">
       <SectionHead num="07 / MEDIA" jp="映像" title="SEE IT" titleAccent="IN MOTION." />
       <div className="media-stack">
-        <a href="#trailer" className="media-trailer" aria-label="Watch trailer · 2:34">
+        <Reveal direction="up" distance={20} as="a" amount={0.2} href="#trailer" className="media-trailer" aria-label="Watch trailer · 2:34">
           <Image
             src="/art/media/trailer-poster.png"
             alt=""
@@ -294,59 +321,64 @@ export const PageHome = () => (
             <div style={{ width: 76, height: 76, borderRadius: "50%", background: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 30, boxShadow: "0 6px 24px rgba(0,0,0,0.5)" }}>▶</div>
           </div>
           <div style={{ position: "absolute", bottom: 12, left: 12, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--paper)", letterSpacing: "0.14em", background: "rgba(0,0,0,0.65)", padding: "4px 8px", zIndex: 2 }}>TRAILER · 2:34</div>
-        </a>
-        <div className="media-thumbs">
-          <MediaThumb src="/art/media/gameplay.png"    label="GAMEPLAY · 0:48"    />
-          <MediaThumb src="/art/media/ability-vfx.png" label="ABILITY VFX · 0:22" />
-          <MediaThumb src="/art/media/hero-art.png"    label="HERO ART"          />
-          <MediaThumb src="/art/media/cyber-ui.png"    label="CYBER UI"          />
-        </div>
+        </Reveal>
+        <Stagger className="media-thumbs" gap={0.06}>
+          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/gameplay.png"    label="GAMEPLAY · 0:48"    /></Reveal>
+          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/ability-vfx.png" label="ABILITY VFX · 0:22" /></Reveal>
+          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/hero-art.png"    label="HERO ART"          /></Reveal>
+          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/cyber-ui.png"    label="CYBER UI"          /></Reveal>
+        </Stagger>
       </div>
     </section>
 
     {/* PRESS */}
     <section className="th-section darker">
       <SectionHead num="08 / PRESS" jp="評価" title="WHAT THEY'RE" titleAccent="SAYING." />
-      <div className="grid-4">
+      <Stagger className="grid-4" gap={0.09}>
         {[
           ["\"BEST FPS LAUNCH IN 5 YEARS.\"", "IGN", "9.5"],
           ["\"FUTURE OF BATTLE ROYALE.\"", "PC GAMER", "94"],
           ["\"NEON-DRENCHED, RUTHLESS.\"", "POLYGON", "9/10"],
           ["\"SQUAD UP, OR DIE TRYING.\"", "EUROGAMER", "ESS."],
         ].map((q, i) => (
-          <div key={i} className="box dark" style={{ padding: 18 }}>
+          <Reveal key={i} direction="up" distance={16} className="box dark" style={{ padding: 18 }}>
             <div style={{ fontFamily: "var(--font-hand)", fontWeight: 700, fontSize: 22, color: "var(--paper)", lineHeight: 1.2 }}>{q[0]}</div>
             <div className="row" style={{ alignItems: "baseline", justifyContent: "space-between", marginTop: 14 }}>
               <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--accent)", letterSpacing: "0.14em" }}>{q[1]}</span>
               <span style={{ fontFamily: "var(--font-hand)", fontSize: 24, fontWeight: 700, color: "var(--accent)" }}>{q[2]}</span>
             </div>
-          </div>
+          </Reveal>
         ))}
-      </div>
+      </Stagger>
     </section>
 
     {/* PRE-LAUNCH CTA — countdown + email signup */}
     <section className="th-section" style={{ textAlign: "center", background: "#000", position: "relative", overflow: "hidden" }}>
       <Kanji size="huge" muted style={{ position: "absolute", top: -40, left: "50%", transform: "translateX(-50%)", color: "var(--accent)", opacity: 0.08, fontSize: "min(360px, 40vw)" }}>狩</Kanji>
-      <Label accent style={{ position: "relative" }}>09 / OPERATION KIRIN</Label>
-      <h2 className="th-sec-title" style={{ position: "relative", fontSize: "clamp(48px, 9vw, 110px)" }}>
-        DROPS <span className="accent">06.15.26</span>
-      </h2>
-      <div style={{ fontFamily: "var(--font-hand)", fontSize: 22, color: "var(--text-dark)", marginTop: 8, position: "relative" }}>
-        Free to play. Forever. Pre-register for drop-in priority.
-      </div>
-
-      <div style={{ position: "relative", display: "flex", justifyContent: "center", marginTop: 32 }}>
-        <Countdown />
-      </div>
-
-      <div style={{ position: "relative", display: "flex", justifyContent: "center", marginTop: 36 }}>
-        <EmailSignup />
-      </div>
-
-      <div className="row" style={{ justifyContent: "center", gap: 12, marginTop: 28, position: "relative", flexWrap: "wrap" }}>
-        <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
-      </div>
+      <Stagger gap={0.14}>
+        <Reveal direction="up" distance={16}>
+          <Label accent style={{ position: "relative" }}>09 / OPERATION KIRIN</Label>
+        </Reveal>
+        <Reveal direction="up" distance={16}>
+          <h2 className="th-sec-title" style={{ position: "relative", fontSize: "clamp(48px, 9vw, 110px)" }}>
+            DROPS <span className="accent">06.15.26</span>
+          </h2>
+        </Reveal>
+        <Reveal direction="up" distance={16}>
+          <div style={{ fontFamily: "var(--font-hand)", fontSize: 22, color: "var(--text-dark)", marginTop: 8, position: "relative" }}>
+            Free to play. Forever. Pre-register for drop-in priority.
+          </div>
+        </Reveal>
+        <Reveal direction="up" distance={16} style={{ position: "relative", display: "flex", justifyContent: "center", marginTop: 32 }}>
+          <Countdown />
+        </Reveal>
+        <Reveal direction="up" distance={16} style={{ position: "relative", display: "flex", justifyContent: "center", marginTop: 36 }}>
+          <EmailSignup />
+        </Reveal>
+        <Reveal direction="up" distance={16} className="row" style={{ justifyContent: "center", gap: 12, marginTop: 28, position: "relative", flexWrap: "wrap" }}>
+          <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
+        </Reveal>
+      </Stagger>
       <div style={{ marginTop: 16, fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted-dark)", letterSpacing: "0.14em", position: "relative" }}>
         PC · PLAYSTATION 5 · XBOX SERIES X|S · CLOUD
       </div>

@@ -1,7 +1,9 @@
 /* eslint-disable react/jsx-no-comment-textnodes, react/no-unescaped-entities */
 /* th-pages-1.jsx — Game, Map, Hunters list, Hunter detail */
 
+import Image from "next/image";
 import Link from "next/link";
+import { ViewTransition } from "react";
 import {
   Brackets,
   Btn,
@@ -481,9 +483,31 @@ export const PageHunterDetail = ({ id = "oni" }) => {
               <Btn variant="dark" size="lg" href="/news" style={{ borderColor: "var(--paper)" }}>▶ ABILITY TRAILER</Btn>
             </div>
           </div>
-          <Img label={`${h.name} · FULL PORTRAIT`} style={{ minHeight: 520 }}>
-            <Kanji size="huge" accent style={{ position: "absolute", top: 20, left: 20, opacity: 0.5, fontSize: "min(240px, 28vw)" }}>{h.k}</Kanji>
-          </Img>
+          <div
+            className="hero-media"
+            style={{
+              position: "relative",
+              minHeight: 520,
+              border: "1.5px solid var(--border-dark)",
+              overflow: "hidden",
+            }}
+          >
+            {h.imageSrc ? (
+              <ViewTransition name={`hunter-portrait-${h.id}`} share="morph">
+                <Image
+                  src={h.imageSrc}
+                  alt={`${h.name} — full portrait`}
+                  fill
+                  priority
+                  sizes="(max-width: 820px) 100vw, 540px"
+                  style={{ objectFit: "cover" }}
+                />
+              </ViewTransition>
+            ) : (
+              <Img label={`${h.name} · FULL PORTRAIT`} style={{ position: "absolute", inset: 0 }} />
+            )}
+            <Kanji size="huge" accent style={{ position: "absolute", top: 20, left: 20, opacity: 0.5, fontSize: "min(240px, 28vw)", pointerEvents: "none", zIndex: 2 }}>{h.k}</Kanji>
+          </div>
         </div>
       </section>
 
