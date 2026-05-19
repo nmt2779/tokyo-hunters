@@ -43,12 +43,12 @@ export const PageGame = () => (
       <SectionHead num="02 / 30-MIN MATCH" jp="三十分" title="A MATCH IN" titleAccent="THREE ACTS." />
       <div className="grid-3">
         {[
-          { ph: "ACT I",   t: "DROP & LOOT",    time: "0:00 – 8:00",   k: "拾",
+          { ph: "ACT I",   t: "SPAWN & GEAR",    time: "0:00 – 8:00",   k: "拾",
             d: "Your 5-stack spawns in 1 of 20 mirrored zones. Walled off. No PvP. Loot baseline gear and credits at your own pace." },
-          { ph: "ACT II",  t: "CONVERGE",       time: "8:00 – 20:00",  k: "集",
-            d: "Zone barriers drop. The Open Zone unlocks at city center — premium loot, cyber-shards, chokepoints. Pick your fights." },
-          { ph: "ACT III", t: "FINAL CIRCLE",   time: "20:00 – 30:00", k: "勝",
-            d: "Neon ring collapses. Cyberware terminals lock. Last squad standing wins. Average finish: 27:12." },
+          { ph: "ACT II",  t: "TRAVERSE",        time: "8:00 – 22:00",  k: "路",
+            d: "Walls fall. Push through HIGHWAY (long sightlines, DMRs) then ARCADE (CQB, shotguns). Loot scales. First blood." },
+          { ph: "ACT III", t: "CENTER ARENA",    time: "22:00 – 30:00", k: "中",
+            d: "Inner ring opens. Exotic loot only. 4 cyberware terminals contested. Neon ring shrinks every 90s. Average finish: 27:12." },
         ].map((a) => (
           <ActCard key={a.ph} phase={a.ph} title={a.t} time={a.time} kanji={a.k} description={a.d} />
         ))}
@@ -202,7 +202,7 @@ export const PageMap = () => {
         </div>
         <h1 className="h-hero" style={{ fontSize: "clamp(48px, 9vw, 110px)" }}>NEW <span className="accent">TOKYO.</span></h1>
         <div style={{ maxWidth: 720, marginTop: 14, fontFamily: "var(--font-hand)", fontSize: 22, color: "var(--text-dark)", lineHeight: 1.4 }}>
-          12 km² · 10 districts · 20 mirrored drop-zones · 1 contested Open Zone.
+          12 km² · 20 spawn zones · 2 traverse belts · 1 center arena. No parachutes. No random landings.
         </div>
       </section>
 
@@ -216,11 +216,11 @@ export const PageMap = () => {
             <Lines count={3} widths={["100%", "92%", "70%"]} />
             <div className="col" style={{ gap: 8, marginTop: 22 }}>
               {[
-                ["20", "isolated drop-zones (Phase I)"],
-                ["1",  "contested Open Zone (Phase II)"],
-                ["10", "districts across the city"],
+                ["20", "spawn zones (Phase I · sealed, no PvP)"],
+                ["2",  "traverse belts (Phase II · highway + arcade)"],
+                ["1",  "center arena (Phase III · final circle)"],
+                ["10", "districts across 4 tiers"],
                 ["48", "named POIs · 12 cyberware terminals"],
-                ["12 km²", "playable area · day & night"],
               ].map((s, i) => (
                 <div key={i} className="row" style={{ alignItems: "baseline", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px dashed var(--border-dark)" }}>
                   <span style={{ fontFamily: "var(--font-hand)", fontSize: 32, fontWeight: 700, color: "var(--accent)", minWidth: 80 }}>{s[0]}</span>
@@ -261,103 +261,97 @@ export const PageMap = () => {
                   </g>
                 );
               })}
-              {/* central open zone */}
-              <circle cx="250" cy="250" r="90" fill="var(--accent)" opacity="0.08" stroke="var(--accent)" strokeWidth="2" strokeDasharray="6 4" />
-              <circle cx="250" cy="250" r="50" fill="none" stroke="var(--accent)" strokeWidth="1" strokeDasharray="3 3" />
-              <text x="250" y="246" textAnchor="middle" fill="var(--paper)" fontFamily="var(--font-hand)" fontSize="28" fontWeight="700">OPEN</text>
-              <text x="250" y="268" textAnchor="middle" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">ZONE</text>
-              {/* arrows from zones to center */}
+              {/* traverse belt 1 — highway (outer) */}
+              <circle cx="250" cy="250" r="135" fill="none" stroke="var(--accent)" strokeWidth="1" strokeDasharray="2 5" opacity="0.45" />
+              <text x="250" y="115" textAnchor="middle" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">HIGHWAY 道</text>
+              {/* traverse belt 2 — arcade (inner) */}
+              <circle cx="250" cy="250" r="95" fill="none" stroke="var(--accent)" strokeWidth="1" strokeDasharray="4 4" opacity="0.65" />
+              <text x="250" y="155" textAnchor="middle" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">ARCADE 街</text>
+              {/* central arena */}
+              <circle cx="250" cy="250" r="55" fill="var(--accent)" opacity="0.12" stroke="var(--accent)" strokeWidth="2" />
+              <text x="250" y="246" textAnchor="middle" fill="var(--paper)" fontFamily="var(--font-hand)" fontSize="26" fontWeight="700">CENTER</text>
+              <text x="250" y="268" textAnchor="middle" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">中 · ARENA</text>
+              {/* paths from spawn zones inward */}
               {Array.from({length: 20}).map((_, i) => {
                 const ang = (i / 20) * Math.PI * 2 - Math.PI/2;
-                const x1 = 250 + 150 * Math.cos(ang);
-                const y1 = 250 + 150 * Math.sin(ang);
-                const x2 = 250 + 100 * Math.cos(ang);
-                const y2 = 250 + 100 * Math.sin(ang);
-                return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--accent)" strokeWidth="0.6" opacity="0.4" />;
+                const x1 = 250 + 154 * Math.cos(ang);
+                const y1 = 250 + 154 * Math.sin(ang);
+                const x2 = 250 + 60 * Math.cos(ang);
+                const y2 = 250 + 60 * Math.sin(ang);
+                return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--accent)" strokeWidth="0.5" opacity="0.25" />;
               })}
             </svg>
-            <Label style={{ position: "absolute", bottom: 14, left: 16, color: "var(--accent)" }}>● PHASE I · 20 zones</Label>
-            <Label style={{ position: "absolute", bottom: 14, right: 16, color: "var(--accent)" }}>◉ PHASE II · Open Zone</Label>
+            <Label style={{ position: "absolute", bottom: 14, left: 16, color: "var(--accent)" }}>■ PHASE I · 20 zones</Label>
+            <Label style={{ position: "absolute", bottom: 14, right: 16, color: "var(--accent)" }}>◉ PHASE III · Center</Label>
           </div>
         </div>
       </section>
 
       {/* Phase explainer — the key mechanic */}
-      <SectionBreak ch="03" title="THE TWO-PHASE LOOT" jp="二段階収集" />
+      <SectionBreak ch="03" title="THE THREE-PHASE LOOP" jp="三段階" />
       <section className="th-section alt">
-        <SectionHead num="03 / MECHANIC" jp="仕組み" title="TWO PHASES." titleAccent="ZERO LUCK." />
+        <SectionHead num="03 / MECHANIC" jp="仕組み" title="THREE PHASES." titleAccent="ZERO LUCK." />
         <div style={{ maxWidth: 760, fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--text-dark)", lineHeight: 1.7, marginBottom: 32 }}>
-          No jump from a plane. No "got third-party'd at drop." Twenty squads, twenty identical zones — loot, learn,
-          load up. Then the walls fall and everyone meets in the middle.
+          No parachutes. No "got third-party'd at drop." Twenty squads spawn in twenty mirrored zones,
+          gear up safely, then push inward across two distinct combat belts before the final stand at center.
         </div>
 
-        <div className="grid-2" style={{ alignItems: "stretch" }}>
-          {/* Phase I */}
+        <div className="grid-3" style={{ alignItems: "stretch" }}>
+          {/* Phase I — SPAWN */}
           <div className="box dark" style={{ padding: 24, position: "relative" }}>
             <Brackets />
             <div className="row" style={{ alignItems: "baseline", justifyContent: "space-between" }}>
               <Tag variant="accent">PHASE I · 0–8 MIN</Tag>
               <Kanji size="xl" accent>拾</Kanji>
             </div>
-            <h3 style={{ fontFamily: "var(--font-hand)", fontSize: 44, color: "var(--paper)", margin: "12px 0 6px", lineHeight: 1 }}>DROP-IN ZONES</h3>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.14em" }}>20 ZONES · 20 SQUADS · MIRRORED LAYOUTS</div>
+            <h3 style={{ fontFamily: "var(--font-hand)", fontSize: 38, color: "var(--paper)", margin: "12px 0 6px", lineHeight: 1 }}>SPAWN ZONES</h3>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.14em" }}>20 ZONES · 20 SQUADS · SEALED</div>
             <hr className="hr dashed" style={{ margin: "16px 0" }} />
             <ul style={{ margin: 0, paddingLeft: 18, fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-dark)", lineHeight: 1.8 }}>
-              <li>Each zone is a sealed-off ~500m district</li>
-              <li>Identical loot tables: SMGs, rifles, basic mods, meds</li>
-              <li>No PvP — focus on positioning + comms</li>
-              <li>One cyberware terminal per zone</li>
-              <li>Walls drop at the 8:00 mark</li>
+              <li>Each zone is a sealed ~500m district</li>
+              <li>Identical loot: SMGs, ARs, basic mods, meds</li>
+              <li>No PvP — positioning + comms only</li>
+              <li>1 cyberware terminal per zone</li>
+              <li>Inner walls drop at the 8:00 mark</li>
             </ul>
-            {/* mini diagram */}
-            <svg viewBox="0 0 320 120" style={{ width: "100%", marginTop: 16 }}>
-              {Array.from({length: 10}).map((_, i) => (
-                <g key={i}>
-                  <rect x={10 + i*30} y="20" width="22" height="22" fill="#0f1318" stroke="var(--accent)" strokeWidth="1" />
-                  <text x={21 + i*30} y="35" textAnchor="middle" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="8">{i+1}</text>
-                </g>
-              ))}
-              {Array.from({length: 10}).map((_, i) => (
-                <g key={i}>
-                  <rect x={10 + i*30} y="60" width="22" height="22" fill="#0f1318" stroke="var(--accent)" strokeWidth="1" />
-                  <text x={21 + i*30} y="75" textAnchor="middle" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="8">{i+11}</text>
-                </g>
-              ))}
-              <text x="160" y="105" textAnchor="middle" fill="var(--muted-dark)" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="2">20 IDENTICAL ZONES · SEALED</text>
-            </svg>
           </div>
 
-          {/* Phase II */}
+          {/* Phase II — TRAVERSE */}
+          <div className="box dark" style={{ padding: 24, position: "relative" }}>
+            <Brackets />
+            <div className="row" style={{ alignItems: "baseline", justifyContent: "space-between" }}>
+              <Tag variant="accent">PHASE II · 8–22 MIN</Tag>
+              <Kanji size="xl" accent>路</Kanji>
+            </div>
+            <h3 style={{ fontFamily: "var(--font-hand)", fontSize: 38, color: "var(--paper)", margin: "12px 0 6px", lineHeight: 1 }}>TRAVERSE BELTS</h3>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.14em" }}>2 TERRAINS · WEAPON ROTATION · FIRST BLOOD</div>
+            <hr className="hr dashed" style={{ margin: "16px 0" }} />
+            <ul style={{ margin: 0, paddingLeft: 18, fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-dark)", lineHeight: 1.8, marginBottom: 12 }}>
+              <li><span style={{ color: "var(--accent)" }}>HIGHWAY 道</span> — long sightlines, DMRs, vehicles, sparse loot</li>
+              <li><span style={{ color: "var(--accent)" }}>ARCADE 街</span> — vertical alleys, shotguns + SMG, dense loot</li>
+              <li>Belts unlock sequentially · weapon mods scale up</li>
+              <li>Each belt has 2 cyberware terminals · contested</li>
+              <li>Inner ring opens at the 22:00 mark</li>
+            </ul>
+          </div>
+
+          {/* Phase III — CENTER */}
           <div className="box dark" style={{ padding: 24, position: "relative", borderColor: "var(--accent)", background: "linear-gradient(180deg, var(--bg-dark), #1a0a0e)" }}>
             <Brackets />
             <div className="row" style={{ alignItems: "baseline", justifyContent: "space-between" }}>
-              <Tag variant="accent">PHASE II · 8–30 MIN</Tag>
-              <Kanji size="xl" accent>戦</Kanji>
+              <Tag variant="accent">PHASE III · 22–30 MIN</Tag>
+              <Kanji size="xl" accent>中</Kanji>
             </div>
-            <h3 style={{ fontFamily: "var(--font-hand)", fontSize: 44, color: "var(--paper)", margin: "12px 0 6px", lineHeight: 1 }}>OPEN ZONE</h3>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.14em" }}>1 ARENA · 20 SQUADS COLLIDE · PREMIUM LOOT</div>
+            <h3 style={{ fontFamily: "var(--font-hand)", fontSize: 38, color: "var(--paper)", margin: "12px 0 6px", lineHeight: 1 }}>CENTER ARENA</h3>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.14em" }}>1 ARENA · EXOTIC LOOT · FINAL CIRCLE</div>
             <hr className="hr dashed" style={{ margin: "16px 0" }} />
             <ul style={{ margin: 0, paddingLeft: 18, fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-dark)", lineHeight: 1.8 }}>
-              <li>Walls collapse, all squads enter together</li>
-              <li>Premium loot only: exotics, legendaries, cyber-shards</li>
+              <li>Survivors collapse into a single arena</li>
+              <li>Exotic loot only: legendaries, cyber-shards</li>
               <li>4 cyberware terminals · contested 24/7</li>
               <li>Neon ring shrinks every 90s</li>
               <li>Last squad standing wins</li>
             </ul>
-            <svg viewBox="0 0 320 120" style={{ width: "100%", marginTop: 16 }}>
-              <circle cx="160" cy="55" r="42" fill="var(--accent)" opacity="0.15" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="3 3" />
-              <circle cx="160" cy="55" r="22" fill="none" stroke="var(--accent)" strokeWidth="1" />
-              {Array.from({length: 20}).map((_, i) => {
-                const a = (i / 20) * Math.PI * 2;
-                const x1 = 160 + 70 * Math.cos(a);
-                const y1 = 55 + 35 * Math.sin(a);
-                const x2 = 160 + 50 * Math.cos(a);
-                const y2 = 55 + 28 * Math.sin(a);
-                return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--accent)" strokeWidth="0.8" />;
-              })}
-              <text x="160" y="58" textAnchor="middle" fill="var(--paper)" fontFamily="var(--font-mono)" fontSize="11" fontWeight="700">CONVERGE</text>
-              <text x="160" y="105" textAnchor="middle" fill="var(--muted-dark)" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="2">1 ARENA · CONTESTED</text>
-            </svg>
           </div>
         </div>
       </section>

@@ -16,22 +16,29 @@ import {
   Ticker,
   TopNav,
 } from "./wireframe-primitives";
+import Image from "next/image";
+import { CodexCard } from "./ui/CodexCard";
+import { Countdown } from "./ui/Countdown";
+import { EmailSignup } from "./ui/EmailSignup";
 import { HunterCard } from "./ui/HunterCard";
 import { HunterPreviewPanel } from "./ui/HunterPreviewPanel";
+import { MediaThumb } from "./ui/MediaThumb";
+import { RosterSection } from "./ui/RosterSection";
+import { ScrollToTop } from "./ui/ScrollToTop";
 import { Pillar } from "./ui/Pillar";
 import { StatBlock } from "./ui/StatBlock";
 
 export const HUNTERS = [
-  { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT",  sig: "Phase Blade · 1.5s i-frame dash" },
-  { id: "oni",    name: "ONI",     k: "鬼", role: "CONTROL",  sig: "Kinetic Wall · deployable cover", selected: true },
-  { id: "ghost",  name: "GHOST",   k: "影", role: "RECON",    sig: "Spectral Scan · 30m wallhack" },
-  { id: "medic",  name: "MEDIC-9", k: "癒", role: "SUPPORT",  sig: "Nano-Mist · squad heal AOE" },
-  { id: "ronin",  name: "RONIN",   k: "侍", role: "ASSAULT",  sig: "Twin Katana · execute proc" },
-  { id: "moth",   name: "MOTH",    k: "蛾", role: "RECON",    sig: "Drone Swarm · vision uplink" },
-  { id: "fuji",   name: "FUJI",    k: "藤", role: "CONTROL",  sig: "Vine Trap · root + dmg" },
-  { id: "nova",   name: "NOVA",    k: "星", role: "SUPPORT",  sig: "Resurrect Beam · revive ally" },
-  { id: "raijin", name: "RAIJIN",  k: "雷", role: "ASSAULT",  sig: "Storm Burst · chain dmg" },
-  { id: "zen",    name: "ZEN",     k: "禅", role: "RECON",    sig: "Time Echo · rewind 4s", isNew: true },
+  { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT", sig: "Phase Blade · 1.5s i-frame dash",   imageSrc: "/art/hunters/kira-07.png", avatarSrc: "/art/hunter-avatars/kira-07.png" },
+  { id: "oni",    name: "ONI",     k: "鬼", role: "CONTROL", sig: "Kinetic Wall · deployable cover",  selected: true, imageSrc: "/art/hunters/oni.png",     avatarSrc: "/art/hunter-avatars/oni.png" },
+  { id: "ghost",  name: "GHOST",   k: "影", role: "RECON",   sig: "Spectral Scan · 30m wallhack",     imageSrc: "/art/hunters/ghost.png",   avatarSrc: "/art/hunter-avatars/ghost.png" },
+  { id: "medic",  name: "MEDIC-9", k: "癒", role: "SUPPORT", sig: "Nano-Mist · squad heal AOE",       imageSrc: "/art/hunters/medic-9.png", avatarSrc: "/art/hunter-avatars/medic-9.png" },
+  { id: "ronin",  name: "RONIN",   k: "侍", role: "ASSAULT", sig: "Twin Katana · execute proc",       imageSrc: "/art/hunters/ronin.png",   avatarSrc: "/art/hunter-avatars/ronin.png" },
+  { id: "moth",   name: "MOTH",    k: "蛾", role: "RECON",   sig: "Drone Swarm · vision uplink",      imageSrc: "/art/hunters/moth.png",    avatarSrc: "/art/hunter-avatars/moth.png" },
+  { id: "fuji",   name: "FUJI",    k: "藤", role: "CONTROL", sig: "Vine Trap · root + dmg",           imageSrc: "/art/hunters/fuji.png",    avatarSrc: "/art/hunter-avatars/fuji.png" },
+  { id: "nova",   name: "NOVA",    k: "星", role: "SUPPORT", sig: "Resurrect Beam · revive ally",     imageSrc: "/art/hunters/nova.png",    avatarSrc: "/art/hunter-avatars/nova.png" },
+  { id: "raijin", name: "RAIJIN",  k: "雷", role: "ASSAULT", sig: "Storm Burst · chain dmg",          imageSrc: "/art/hunters/raijin.png",  avatarSrc: "/art/hunter-avatars/raijin.png" },
+  { id: "zen",    name: "ZEN",     k: "禅", role: "RECON",   sig: "Time Echo · rewind 4s",            isNew: true, imageSrc: "/art/hunters/zen.png",     avatarSrc: "/art/hunter-avatars/zen.png" },
 ];
 
 export const PageHome = () => (
@@ -47,9 +54,11 @@ export const PageHome = () => (
           <h1 className="h-hero" style={{ marginTop: 14 }}>
             DROP.<br/>ADAPT.<br/><span className="accent">OUTLAST.</span>
           </h1>
-          <div style={{ marginTop: 18, maxWidth: 460, color: "var(--text-dark)", fontSize: 14, lineHeight: 1.6 }}>
-            <Lines count={3} widths={["100%", "92%", "65%"]} />
-          </div>
+          <p style={{ marginTop: 18, maxWidth: 460, color: "var(--text-dark)", fontSize: 14, lineHeight: 1.6, fontFamily: "var(--font-mono)" }}>
+            Twenty squads spawn across neo-Tokyo. Push through two combat belts —
+            highway, then arcade — toward the contested center. Last team standing wins.
+            Free to play, forever. Drops <span style={{ color: "var(--accent)" }}>06.15.26</span>.
+          </p>
           <HeroCTAs />
           <div className="hero-stats">
             {[
@@ -63,13 +72,15 @@ export const PageHome = () => (
           </div>
         </div>
         <HunterPreviewPanel
-          index={1}
+          index={10}
           total={10}
-          role="ASSAULT"
-          name="KIRA-07"
-          kanji="斬"
-          sig={'"PHASE BLADE" · I-FRAME DASH 1.5s'}
-          imageLabel="HERO PORTRAIT · KIRA-07 · neon rim light"
+          role="RECON"
+          name="ZEN"
+          kanji="禅"
+          sig={'"TIME ECHO" · REWIND 4s · SEASON 0 DEBUT'}
+          imageLabel="HERO PORTRAIT · ZEN · neon rim light"
+          imageSrc="/art/hunters/zen.png"
+          imageAlt="ZEN — recon hunter, Season 0 debut"
         />
       </div>
     </section>
@@ -79,13 +90,41 @@ export const PageHome = () => (
     {/* CORE PILLARS — clearly bordered section */}
     <SectionBreak ch="02" title="CORE PILLARS" jp="四柱・基本原則" />
     <section className="th-section">
-      <SectionHead num="02 / FOUR PILLARS" jp="四柱" title="WAR IS A" titleAccent="SYSTEM." lede />
+      <SectionHead
+        num="02 / FOUR PILLARS"
+        jp="四柱"
+        title="WAR IS A"
+        titleAccent="SYSTEM."
+        lede="Tokyo Hunters isn't a deathmatch with extra steps. Every match is a 30-minute system built on four interlocking pillars — designed so skill compounds and luck dies."
+      />
       <div className="col" style={{ gap: 20 }}>
         {[
-          { n: "I",   t: "100-PLAYER ROYALE",  k: "戦", d: "20 squads · 1 city · 30-minute match" },
-          { n: "II",  t: "10 UNIQUE HUNTERS",  k: "鬼", d: "Four roles · ranked queue · hand-tuned kits", rev: true },
-          { n: "III", t: "CYBERWARE LOOT",     k: "改", d: "40+ implants · install mid-match" },
-          { n: "IV",  t: "5-STACK SQUADS",     k: "組", d: "Voice ping · callouts · role bonus XP", rev: true },
+          {
+            n: "I",   t: "100-PLAYER ROYALE",  k: "戦",
+            d: "20 squads · 20 spawn zones · 30-minute match",
+            body: "Every match is 100 hunters split into 20 squads of five, dropped across a 12 km² slice of neo-Tokyo. No queues. No fillers. Just one collapsing city and a 30-minute clock that won't blink.",
+            img: "/art/pillars/royale.png", alt: "100-player royale — Shibuya containment ring",
+          },
+          {
+            n: "II",  t: "10 UNIQUE HUNTERS",  k: "鬼",
+            d: "Four roles · ranked queue · hand-tuned kits",
+            body: "Ten hunters across four roles — Assault, Recon, Control, Support — each with a hand-tuned passive, active and ultimate. No skill trees. No grind. Pick a hunter, learn the kit, master it for life.",
+            img: "/art/pillars/hunters.png", alt: "Ten hunters squad lineup",
+            rev: true,
+          },
+          {
+            n: "III", t: "CYBERWARE LOOT",     k: "改",
+            d: "40+ implants · install mid-match",
+            body: "Forty-plus cybernetic implants pulled live from terminals on the map — neural OS, ocular mods, combat augments. Stack three to rewrite your kit mid-match. Lose them all if your squad falls.",
+            img: "/art/pillars/cyberware.png", alt: "Cybernetic implant install close-up",
+          },
+          {
+            n: "IV",  t: "5-STACK SQUADS",     k: "組",
+            d: "Voice ping · callouts · role bonus XP",
+            body: "Five-stack only. Built-in voice with directional pings, contextual callouts and a role-queue bonus that rewards balanced compositions. Soloqueue exists — but the game is built for the squad.",
+            img: "/art/pillars/squads.png", alt: "Five-stack squad in V-formation",
+            rev: true,
+          },
         ].map((f, i) => (
           <Pillar
             key={i}
@@ -94,7 +133,13 @@ export const PageHome = () => (
             kanji={f.k}
             description={f.d}
             reverse={f.rev}
-          />
+            imageSrc={f.img}
+            imageAlt={f.alt}
+          >
+            <p style={{ fontFamily: "var(--font-mono)", fontSize: 13, lineHeight: 1.65, color: "var(--text-dark)", margin: 0 }}>
+              {f.body}
+            </p>
+          </Pillar>
         ))}
       </div>
     </section>
@@ -103,54 +148,7 @@ export const PageHome = () => (
     <SectionBreak ch="03" title="HUNTER SELECT" jp="狩人選択" />
     <section className="th-section alt">
       <SectionHead num="03 / ROSTER" jp="狩人" title="TEN HUNTERS." titleAccent="ONE TOKYO." />
-      <div className="split image-r">
-        {/* big preview */}
-        <div className="box dark" style={{ borderColor: "var(--accent)", position: "relative", minHeight: 520 }}>
-          <Img label="SELECTED · ONI" style={{ height: "100%", minHeight: 520 }}>
-            <Kanji size="huge" accent style={{ position: "absolute", top: 20, right: 20, opacity: 0.6, fontSize: "min(180px, 22vw)" }}>鬼</Kanji>
-          </Img>
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: 22, background: "linear-gradient(180deg, transparent, #000 60%)" }}>
-            <Tag variant="accent">CONTROL</Tag>
-            <div style={{ fontFamily: "var(--font-hand)", fontSize: 44, fontWeight: 700, color: "var(--paper)", marginTop: 6 }}>ONI</div>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-dark)", letterSpacing: "0.12em" }}>"THE WALL THAT REMEMBERS"</div>
-            <hr className="hr accent" style={{ margin: "12px 0", width: 60, height: 2 }} />
-            <div className="col" style={{ gap: 8 }}>
-              {[["P · BULWARK",       "PASSIVE",   "+25 hp overshield, 4s after no dmg"],
-                ["E · KINETIC WALL",  "ACTIVE",    "deployable cover, 6s · CD 12s"],
-                ["R · FORTRESS",      "ULTIMATE",  "dome shield 8s · allies inside take 0 ranged dmg"]].map((a, i) => (
-                <div key={i} className="row" style={{ alignItems: "baseline", gap: 10 }}>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: i === 2 ? "#fff" : "var(--accent)", background: i === 2 ? "var(--accent)" : "transparent", border: i === 2 ? "none" : "1px solid var(--accent)", padding: "2px 6px", letterSpacing: "0.12em", minWidth: 64, textAlign: "center" }}>{a[1]}</span>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--paper)", minWidth: 130 }}>{a[0]}</span>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", flex: 1 }}>{a[2]}</span>
-                </div>
-              ))}
-            </div>
-            <Btn variant="primary" size="lg" href="/hunters/oni" style={{ marginTop: 16, width: "100%" }}>VIEW FULL DOSSIER →</Btn>
-          </div>
-        </div>
-        <div className="col" style={{ gap: 14 }}>
-          <div className="chips">
-            {["ASSAULT", "RECON", "SUPPORT", "CONTROL"].map((r, i) => (
-              <Tag key={i} variant={i === 3 ? "accent" : "ghost-dark"}>{r}</Tag>
-            ))}
-            <span style={{ marginLeft: "auto", fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.14em" }}>10/10 UNLOCKED</span>
-          </div>
-          <div className="grid-5">
-            {HUNTERS.map((h) => (
-              <HunterCard key={h.id} hunter={h} />
-            ))}
-          </div>
-          <div className="box dark" style={{ padding: 16 }}>
-            <div className="row" style={{ alignItems: "baseline", gap: 12 }}>
-              <Kanji size="md" accent>役割</Kanji>
-              <div style={{ fontFamily: "var(--font-hand)", fontSize: 22, fontWeight: 700, color: "var(--paper)" }}>ROLE QUEUE</div>
-              <div style={{ flex: 1 }} />
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)" }}>1 OF EACH = +10% XP</span>
-            </div>
-            <div style={{ marginTop: 10 }}><Lines count={2} widths={["100%", "70%"]} /></div>
-          </div>
-        </div>
-      </div>
+      <RosterSection hunters={HUNTERS} />
     </section>
 
     {/* GAMEPLAY LOOP — 30 MIN */}
@@ -159,7 +157,11 @@ export const PageHome = () => (
       <SectionHead num="04 / THE LOOP" jp="輪廻" title="ONE LOOP." titleAccent="ZERO MERCY." />
       <div className="split">
         <div>
-          <Lines count={4} widths={["100%", "92%", "85%", "60%"]} />
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: 14, lineHeight: 1.7, color: "var(--text-dark)", margin: 0 }}>
+            Every match runs the same six-beat loop — but the system rewards squads that read the
+            clock and bend the rhythm. Drop sealed, loot calm, upgrade smart. When the walls fall
+            the only thing that matters is how prepared you were when nobody was watching.
+          </p>
           <div className="col" style={{ gap: 12, marginTop: 24 }}>
             {[
               ["DROP",     "20 teams · 20 isolated zones · loot basics safely", "落"],
@@ -210,21 +212,13 @@ export const PageHome = () => (
       <SectionHead num="05 / LOADOUT" jp="武装" title="80+ WEAPONS." titleAccent="40+ CYBERWARE." />
       <div className="grid-5">
         {[
-          { c: "WEAPON", n: "TANTO-X",    t: "ENERGY SMG",       r: "RARE",      k: "短" },
-          { c: "WEAPON", n: "RAIDEN-9",   t: "RAILGUN",          r: "EXOTIC",    k: "雷" },
-          { c: "CYBER",  n: "VESPA-OS",   t: "NEURAL TIER 3",    r: "EPIC",      k: "脳" },
-          { c: "CYBER",  n: "ARGUS EYE",  t: "VISION TIER 2",    r: "RARE",      k: "眼" },
-          { c: "CYBER",  n: "TITAN ARMS", t: "COMBAT TIER 4",    r: "LEGENDARY", k: "腕" },
-        ].map((w, i) => (
-          <div key={i} className="codex-card">
-            <div className="row" style={{ alignItems: "baseline", justifyContent: "space-between" }}>
-              <Tag variant={w.c === "CYBER" ? "accent" : "ghost-dark"}>{w.c}</Tag>
-              <span className="rarity">{w.r}</span>
-            </div>
-            <div className="art"><Kanji className="kanji">{w.k}</Kanji></div>
-            <div className="name">{w.n}</div>
-            <div className="type">{w.t}</div>
-          </div>
+          { category: "WEAPON", name: "TANTO-X",    type: "ENERGY SMG",    rarity: "RARE",      kanji: "短", imageSrc: "/art/weapons/tanto-x.png" },
+          { category: "WEAPON", name: "RAIDEN-9",   type: "RAILGUN",       rarity: "EXOTIC",    kanji: "雷", imageSrc: "/art/weapons/raiden-9.png" },
+          { category: "CYBER",  name: "VESPA-OS",   type: "NEURAL TIER 3", rarity: "EPIC",      kanji: "脳", imageSrc: "/art/cyber/vespa-os.png" },
+          { category: "CYBER",  name: "ARGUS EYE",  type: "VISION TIER 2", rarity: "RARE",      kanji: "眼", imageSrc: "/art/cyber/argus-eye.png" },
+          { category: "CYBER",  name: "TITAN ARMS", type: "COMBAT TIER 4", rarity: "LEGENDARY", kanji: "腕", imageSrc: "/art/cyber/titan-arms.png" },
+        ].map((item) => (
+          <CodexCard key={item.name} item={item} />
         ))}
       </div>
       <div className="row" style={{ justifyContent: "center", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
@@ -233,21 +227,26 @@ export const PageHome = () => (
       </div>
     </section>
 
-    {/* MAP TEASER — new mechanic */}
+    {/* MAP TEASER — 3-phase mechanic */}
     <SectionBreak ch="06" title="THE MAP" jp="戦場地図" />
     <section className="th-section">
-      <SectionHead num="06 / MAP" jp="区" title="20 ZONES." titleAccent="ONE CITY." />
-      <div className="split">
+      <SectionHead num="06 / MAP" jp="区" title="THREE PHASES." titleAccent="ONE CENTER." />
+      <div className="split image-r">
         <div>
           <div style={{ fontFamily: "var(--font-hand)", fontSize: 26, color: "var(--paper)", lineHeight: 1.2, marginBottom: 16 }}>
-            "No random drops. Twenty squads, twenty mirrored zones. Loot safely. Then converge."
+            "No random drops. Spawn in your zone. Cross two belts. Meet at the heart of Tokyo."
           </div>
-          <Lines count={4} widths={["100%", "92%", "85%", "70%"]} />
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: 13, lineHeight: 1.65, color: "var(--text-dark)", margin: 0 }}>
+            The map is built around a single question — how do you get to the center alive?
+            Each phase rewards a different toolkit: patience on the spawn ring, mobility on the
+            highway belt, room-clearing in the arcades, raw aggression at the core. Build the
+            squad that can do all four.
+          </p>
           <div className="col" style={{ gap: 10, marginTop: 22 }}>
             {[
-              ["PHASE I",  "DROP-IN ZONES",   "20 identical loot zones, walled off"],
-              ["PHASE II", "OPEN ZONE",       "central PvP arena, premium loot"],
-              ["PHASE III","FINAL CIRCLE",    "shrinking neon, last team wins"],
+              ["PHASE I",   "SPAWN ZONES",      "20 sealed zones, mirrored loot, no PvP"],
+              ["PHASE II",  "TRAVERSE BELTS",   "2 terrains · highway then arcade · loot scales"],
+              ["PHASE III", "CENTER ARENA",     "1 contested core, exotic loot, final circle"],
             ].map((p, i) => (
               <div key={i} className="row" style={{ alignItems: "baseline", gap: 14, padding: "10px 0", borderBottom: "1px dashed var(--border-dark)" }}>
                 <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--accent)", letterSpacing: "0.14em", minWidth: 70 }}>{p[0]}</span>
@@ -258,22 +257,23 @@ export const PageHome = () => (
           </div>
           <Btn variant="primary" size="lg" href="/map" style={{ marginTop: 20 }}>EXPLORE THE MAP →</Btn>
         </div>
-        <Img label="MAP DIAGRAM · 20 isolated loot zones → central open zone" style={{ minHeight: 380 }}>
-          {/* phased map preview */}
-          <svg viewBox="0 0 400 380" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", padding: 30 }}>
-            {/* outer ring of 20 mini-zones */}
-            {Array.from({ length: 20 }).map((_, i) => {
-              const ang = (i / 20) * Math.PI * 2;
-              const x = 200 + 140 * Math.cos(ang);
-              const y = 190 + 140 * Math.sin(ang);
-              return <rect key={i} x={x-14} y={y-14} width="28" height="28" fill="#0f1318" stroke="var(--accent)" strokeWidth="1.2" />;
-            })}
-            {/* center open zone */}
-            <circle cx="200" cy="190" r="60" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="6 4" />
-            <text x="200" y="186" textAnchor="middle" fill="var(--paper)" fontFamily="var(--font-hand)" fontSize="22" fontWeight="700">OPEN</text>
-            <text x="200" y="206" textAnchor="middle" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">ZONE</text>
-          </svg>
-        </Img>
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            border: "1.5px solid var(--border-dark)",
+            overflow: "hidden",
+            aspectRatio: "1 / 1",
+          }}
+        >
+          <Image
+            src="/art/map/diagram.png"
+            alt="Tokyo map diagram — 20 spawn zones, 2 traverse belts (highway, arcade), 1 center arena"
+            fill
+            sizes="(max-width: 820px) 100vw, 540px"
+            style={{ objectFit: "contain" }}
+          />
+        </div>
       </div>
     </section>
 
@@ -281,19 +281,25 @@ export const PageHome = () => (
     <SectionBreak ch="07" title="MEDIA" jp="映像" />
     <section className="th-section alt">
       <SectionHead num="07 / MEDIA" jp="映像" title="SEE IT" titleAccent="IN MOTION." />
-      <div className="grid-3" style={{ gridTemplateColumns: "2fr 1fr 1fr" }}>
-        <Img label="TRAILER · 2:34" style={{ minHeight: 320 }}>
-          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div style={{ width: 76, height: 76, borderRadius: "50%", background: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 30 }}>▶</div>
+      <div className="media-stack">
+        <a href="#trailer" className="media-trailer" aria-label="Watch trailer · 2:34">
+          <Image
+            src="/art/media/trailer-poster.png"
+            alt=""
+            fill
+            sizes="(max-width: 1100px) 100vw, 1100px"
+            style={{ objectFit: "cover" }}
+          />
+          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2 }}>
+            <div style={{ width: 76, height: 76, borderRadius: "50%", background: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 30, boxShadow: "0 6px 24px rgba(0,0,0,0.5)" }}>▶</div>
           </div>
-        </Img>
-        <div className="col" style={{ gap: 14 }}>
-          <Img label="GAMEPLAY · 0:48" style={{ flex: 1, minHeight: 150 }} />
-          <Img label="ABILITY VFX · 0:22" style={{ flex: 1, minHeight: 150 }} />
-        </div>
-        <div className="col" style={{ gap: 14 }}>
-          <Img label="HERO ART" style={{ flex: 1, minHeight: 150 }} />
-          <Img label="CYBER UI" style={{ flex: 1, minHeight: 150 }} />
+          <div style={{ position: "absolute", bottom: 12, left: 12, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--paper)", letterSpacing: "0.14em", background: "rgba(0,0,0,0.65)", padding: "4px 8px", zIndex: 2 }}>TRAILER · 2:34</div>
+        </a>
+        <div className="media-thumbs">
+          <MediaThumb src="/art/media/gameplay.png"    label="GAMEPLAY · 0:48"    />
+          <MediaThumb src="/art/media/ability-vfx.png" label="ABILITY VFX · 0:22" />
+          <MediaThumb src="/art/media/hero-art.png"    label="HERO ART"          />
+          <MediaThumb src="/art/media/cyber-ui.png"    label="CYBER UI"          />
         </div>
       </div>
     </section>
@@ -319,18 +325,26 @@ export const PageHome = () => (
       </div>
     </section>
 
-    {/* FINAL CTA — clear purpose, no input */}
+    {/* PRE-LAUNCH CTA — countdown + email signup */}
     <section className="th-section" style={{ textAlign: "center", background: "#000", position: "relative", overflow: "hidden" }}>
       <Kanji size="huge" muted style={{ position: "absolute", top: -40, left: "50%", transform: "translateX(-50%)", color: "var(--accent)", opacity: 0.08, fontSize: "min(360px, 40vw)" }}>狩</Kanji>
-      <Label accent style={{ position: "relative" }}>09 / DOWNLOAD</Label>
+      <Label accent style={{ position: "relative" }}>09 / OPERATION KIRIN</Label>
       <h2 className="th-sec-title" style={{ position: "relative", fontSize: "clamp(48px, 9vw, 110px)" }}>
-        FREE TO PLAY. <span className="accent">FOREVER.</span>
+        DROPS <span className="accent">06.15.26</span>
       </h2>
       <div style={{ fontFamily: "var(--font-hand)", fontSize: 22, color: "var(--text-dark)", marginTop: 8, position: "relative" }}>
-        No paywalls. No editions. Download, install, drop in.
+        Free to play. Forever. Pre-register for drop-in priority.
       </div>
+
+      <div style={{ position: "relative", display: "flex", justifyContent: "center", marginTop: 32 }}>
+        <Countdown />
+      </div>
+
+      <div style={{ position: "relative", display: "flex", justifyContent: "center", marginTop: 36 }}>
+        <EmailSignup />
+      </div>
+
       <div className="row" style={{ justifyContent: "center", gap: 12, marginTop: 28, position: "relative", flexWrap: "wrap" }}>
-        <Btn variant="primary" size="xl" href="/game">► DOWNLOAD FREE</Btn>
         <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
       </div>
       <div style={{ marginTop: 16, fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted-dark)", letterSpacing: "0.14em", position: "relative" }}>
@@ -339,5 +353,6 @@ export const PageHome = () => (
     </section>
 
     <Footer />
+    <ScrollToTop />
   </main>
 );

@@ -16,6 +16,10 @@ import {
   TopNav,
 } from "../_components/wireframe-primitives";
 import { ActCard } from "../_components/ui/ActCard";
+import { CodexCard } from "../_components/ui/CodexCard";
+import { Countdown } from "../_components/ui/Countdown";
+import { EmailSignup } from "../_components/ui/EmailSignup";
+import { HunterAvatar } from "../_components/ui/HunterAvatar";
 import { HunterCard, type Hunter } from "../_components/ui/HunterCard";
 import { HunterPreviewPanel } from "../_components/ui/HunterPreviewPanel";
 import { Pillar } from "../_components/ui/Pillar";
@@ -345,6 +349,19 @@ export default function DesignSystemPage() {
           </div>
         </div>
 
+        {/* HunterAvatar */}
+        <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
+          <Label accent>&lt;HunterAvatar /&gt; — app/_components/ui/HunterAvatar.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            SQUARE 1:1 · USE · roster selector grid · STATES · default · selected · isNew
+          </div>
+          <div style={{ marginTop: 18, display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 80px))", gap: 10, maxWidth: 460 }}>
+            {SAMPLE_HUNTERS.map((h) => (
+              <HunterAvatar key={h.id} hunter={h} selected={h.id === "oni"} />
+            ))}
+          </div>
+        </div>
+
         {/* Pillar */}
         <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
           <Label accent>&lt;Pillar /&gt; — app/_components/ui/Pillar.tsx</Label>
@@ -384,6 +401,21 @@ export default function DesignSystemPage() {
           </div>
         </div>
 
+        {/* CodexCard */}
+        <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
+          <Label accent>&lt;CodexCard /&gt; — app/_components/ui/CodexCard.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            CATEGORY · WEAPON | CYBER &nbsp;·&nbsp; RARITY · COMMON | RARE | EPIC | LEGENDARY | EXOTIC
+          </div>
+          <div className="grid-5" style={{ marginTop: 18 }}>
+            <CodexCard item={{ category: "WEAPON", name: "TANTO-X",    type: "ENERGY SMG",    rarity: "RARE",      kanji: "短", imageSrc: "/art/weapons/tanto-x.png" }} />
+            <CodexCard item={{ category: "WEAPON", name: "RAIDEN-9",   type: "RAILGUN",       rarity: "EXOTIC",    kanji: "雷", imageSrc: "/art/weapons/raiden-9.png" }} />
+            <CodexCard item={{ category: "CYBER",  name: "VESPA-OS",   type: "NEURAL TIER 3", rarity: "EPIC",      kanji: "脳", imageSrc: "/art/cyber/vespa-os.png" }} />
+            <CodexCard item={{ category: "CYBER",  name: "ARGUS EYE",  type: "VISION TIER 2", rarity: "RARE",      kanji: "眼", imageSrc: "/art/cyber/argus-eye.png" }} />
+            <CodexCard item={{ category: "CYBER",  name: "TITAN ARMS", type: "COMBAT TIER 4", rarity: "LEGENDARY", kanji: "腕", imageSrc: "/art/cyber/titan-arms.png" }} />
+          </div>
+        </div>
+
         {/* HunterPreviewPanel */}
         <div className="box dark" style={{ padding: 28 }}>
           <Label accent>&lt;HunterPreviewPanel /&gt; — app/_components/ui/HunterPreviewPanel.tsx</Label>
@@ -405,10 +437,40 @@ export default function DesignSystemPage() {
         </div>
       </section>
 
-      {/* === INTENTIONAL FLAWS === */}
-      <SectionBreak ch="11" title="INTENTIONAL FLAWS" jp="侘寂" />
+      {/* === PRE-LAUNCH === */}
+      <SectionBreak ch="11" title="PRE-LAUNCH" jp="開幕前" />
       <section className="th-section" style={sectionStyle}>
-        <SectionHead num="11 / WABI-SABI" jp="美" title="DO NOT" titleAccent="POLISH." />
+        <SectionHead num="11 / PRE-LAUNCH" jp="開幕" title="COUNTDOWN." titleAccent="SIGNUP." />
+        <div style={subHeadStyle}>USE · 1 instance per page max · final CTA section</div>
+
+        <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
+          <Label accent>&lt;Countdown /&gt; — app/_components/ui/Countdown.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            DEFAULT TARGET · 2026-06-15 00:00 JST · ticks every second
+          </div>
+          <div style={{ marginTop: 18, display: "flex", justifyContent: "center" }}>
+            <Countdown />
+          </div>
+        </div>
+
+        <div className="box dark" style={{ padding: 28 }}>
+          <Label accent>&lt;EmailSignup /&gt; — app/_components/ui/EmailSignup.tsx</Label>
+          <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
+            STATES · idle · error (invalid email) · submitting · success
+          </div>
+          <div style={{ marginTop: 18, display: "flex", justifyContent: "center" }}>
+            <EmailSignup />
+          </div>
+          <div style={{ marginTop: 14, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em", textAlign: "center" }}>
+            BACKEND · TODO · currently logs to console only
+          </div>
+        </div>
+      </section>
+
+      {/* === INTENTIONAL FLAWS === */}
+      <SectionBreak ch="12" title="INTENTIONAL FLAWS" jp="侘寂" />
+      <section className="th-section" style={sectionStyle}>
+        <SectionHead num="12 / WABI-SABI" jp="美" title="DO NOT" titleAccent="POLISH." />
         <div style={subHeadStyle}>WARNING · These look like bugs · They are the brand · See DESIGN_INTENT.md §4</div>
         <div className="grid-2">
           {[

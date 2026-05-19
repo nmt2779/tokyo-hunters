@@ -28,6 +28,8 @@
      Do NOT redeclare them here. */
 
   --gutter: clamp(16px, 4vw, 56px);
+  --content-max-w: 1680px;
+  --content-pad-x: max(var(--gutter), calc((100vw - 1680px) / 2));
 }
 
 * { box-sizing: border-box; }
@@ -360,9 +362,13 @@ body.no-jp .kanji { display: none !important; }
    ============================================================ */
 
 /* SECTION SEPARATOR — big break between hero sections */
+/* horizontal padding clamps to keep inner content max ~1440px wide */
 .th-section {
   position: relative;
-  padding: clamp(40px, 7vw, 96px) var(--gutter);
+  padding-top: clamp(40px, 7vw, 96px);
+  padding-bottom: clamp(40px, 7vw, 96px);
+  padding-left: var(--content-pad-x);
+  padding-right: var(--content-pad-x);
 }
 .th-section.alt   { background: var(--bg-dark-2); border-top: 1px solid var(--border-dark); border-bottom: 1px solid var(--border-dark); }
 .th-section.darker{ background: #06090d; border-top: 1px solid var(--border-dark); border-bottom: 1px solid var(--border-dark); }
@@ -422,7 +428,7 @@ body.no-jp .kanji { display: none !important; }
   background: #000;
   border-top: 1px solid var(--border-dark);
   border-bottom: 1px solid var(--border-dark);
-  padding: clamp(14px, 2vw, 22px) var(--gutter);
+  padding: clamp(14px, 2vw, 22px) var(--content-pad-x);
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   gap: 20px;
@@ -451,12 +457,21 @@ body.no-jp .kanji { display: none !important; }
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 14px var(--gutter);
+  padding: 14px var(--content-pad-x);
   border-bottom: 1px solid var(--border-dark);
   background: #07090c;
   color: var(--paper);
   flex-wrap: wrap;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: background-color 220ms ease, backdrop-filter 220ms ease, border-color 220ms ease;
+}
+.th-nav--scrolled {
+  background: rgba(7, 9, 12, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: rgba(42, 47, 54, 0.7);
 }
 .th-nav .logo {
   display: inline-flex;
@@ -471,7 +486,6 @@ body.no-jp .kanji { display: none !important; }
 .th-nav .nav-links {
   display: flex;
   gap: 22px;
-  flex: 1;
   min-width: 0;
   overflow-x: auto;
   scrollbar-width: none;
@@ -491,7 +505,7 @@ body.no-jp .kanji { display: none !important; }
 .th-nav .nav-link.active::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -16px; height: 2px; background: var(--accent);
 }
-.th-nav .nav-cta { display: flex; gap: 10px; align-items: center; }
+.th-nav .nav-cta { display: flex; gap: 10px; align-items: center; margin-left: auto; }
 .th-nav .hamburger {
   display: none;
   width: 32px; height: 32px;
@@ -505,7 +519,7 @@ body.no-jp .kanji { display: none !important; }
   .th-nav .hamburger { display: inline-flex; }
 }
 
-/* ticker */
+/* ticker — animated marquee */
 .th-ticker {
   padding: 10px 0;
   background: var(--accent);
@@ -515,14 +529,28 @@ body.no-jp .kanji { display: none !important; }
   letter-spacing: 0.24em;
   white-space: nowrap;
   overflow: hidden;
+  display: block;
+}
+.th-ticker-track {
   display: flex;
   gap: 28px;
+  width: max-content;
+  animation: ticker-scroll 45s linear infinite;
+  will-change: transform;
 }
-.th-ticker span { flex: 0 0 auto; }
+.th-ticker-track:hover { animation-play-state: paused; }
+.th-ticker-track > span { flex: 0 0 auto; }
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .th-ticker-track { animation: none; }
+}
 
 /* footer */
 .th-footer {
-  padding: 36px var(--gutter) 24px;
+  padding: 36px var(--content-pad-x) 24px;
   background: #000;
   color: var(--text-dark);
   border-top: 1px solid var(--border-dark);
@@ -546,6 +574,102 @@ body.no-jp .kanji { display: none !important; }
   letter-spacing: 0.14em;
   color: var(--muted-dark);
   flex-wrap: wrap;
+}
+
+/* roster split — big hero left (capped 720px), avatar column right stretches to section edge */
+.roster-split {
+  display: grid;
+  gap: clamp(20px, 3vw, 36px);
+  grid-template-columns: minmax(0, 720px) minmax(0, 1fr);
+  align-items: start;
+}
+@media (max-width: 980px) {
+  .roster-split {
+    grid-template-columns: 1fr;
+  }
+  .roster-split > :first-child {
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+/* small square hunter avatar selector (right column of RosterSection) */
+.hunter-avatar {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--bg-dark);
+  border: 1.5px solid var(--border-dark);
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+.hunter-avatar:hover { border-color: var(--accent); transform: translateY(-2px); }
+.hunter-avatar.selected { border: 2px solid var(--accent); }
+.hunter-avatar .kanji-badge {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  z-index: 2;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+.hunter-avatar .name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 4px 6px;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.85));
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--paper);
+  text-align: center;
+}
+.hunter-avatar .new-tag {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  padding: 2px 5px;
+  background: var(--accent);
+  color: #fff;
+  letter-spacing: 0.14em;
+}
+
+/* media — trailer (16:9) + thumb row (1:1 each), fully responsive, capped on huge screens */
+.media-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+.media-trailer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1.5px solid var(--border-dark);
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+}
+.media-thumbs {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 720px) {
+  .media-thumbs { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 380px) {
+  .media-thumbs { grid-template-columns: 1fr; }
 }
 
 /* card grids — responsive */
@@ -580,19 +704,19 @@ body.no-jp .kanji { display: none !important; }
   }
 }
 
-/* HERO STATS row */
+/* HERO STATS row — content-width, not full-width */
 .hero-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
   margin-top: 32px;
 }
-@media (max-width: 720px) { .hero-stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 720px) { .hero-stats { gap: 24px; } }
 
 /* hunter portrait card */
 .hunter-card {
   position: relative;
-  aspect-ratio: 1 / 1.2;
+  aspect-ratio: 3 / 4;
   padding: 10px;
   background: var(--bg-dark);
   border: 1px solid var(--border-dark);
