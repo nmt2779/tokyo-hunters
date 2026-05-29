@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
+import { Magnetic } from "./motion/Magnetic";
 
 type Style = CSSProperties | undefined;
 
@@ -298,14 +299,19 @@ export const SectionBreak = ({
 );
 
 export const Ticker = ({ items }: { items: string[] }) => {
-  // Render the items twice — animation translates -50% so the second copy
-  // arrives exactly where the first started, looping seamlessly.
+  // Render 6 copies so the track is always wider than any viewport.
+  // Animation translates -1/6 of the track (= one line copy) so the loop
+  // is seamless: the second copy ends up exactly where the first started.
   const line = items.join("  ·  ") + "  ·  ";
+  const COPIES = 6;
   return (
     <div className="th-ticker" aria-label="Status ticker">
       <div className="th-ticker-track">
-        <span>{line}</span>
-        <span aria-hidden="true">{line}</span>
+        {Array.from({ length: COPIES }).map((_, i) => (
+          <span key={i} aria-hidden={i > 0 || undefined}>
+            {line}
+          </span>
+        ))}
       </div>
     </div>
   );
@@ -346,7 +352,11 @@ export const Footer = () => (
 
 export const HeroCTAs = () => (
   <div className="row" style={{ gap: 12, marginTop: 24, flexWrap: "wrap" }}>
-    <Btn variant="primary" size="xl" href="/game">► PLAY FREE NOW</Btn>
-    <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
+    <Magnetic>
+      <Btn variant="primary" size="xl" href="/game">► PLAY FREE NOW</Btn>
+    </Magnetic>
+    <Magnetic>
+      <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
+    </Magnetic>
   </div>
 );

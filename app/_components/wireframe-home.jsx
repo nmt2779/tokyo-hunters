@@ -2,7 +2,6 @@
 /* th-home.jsx — Home page (Battle Royale Hype) */
 
 import {
-  Brackets,
   Btn,
   Footer,
   HeroCTAs,
@@ -18,6 +17,7 @@ import Image from "next/image";
 import { CodexCard } from "./ui/CodexCard";
 import { Countdown } from "./ui/Countdown";
 import { EmailSignup } from "./ui/EmailSignup";
+import { HeroVideo } from "./ui/HeroVideo";
 import { HunterPreviewPanel } from "./ui/HunterPreviewPanel";
 import { MediaThumb } from "./ui/MediaThumb";
 import { RosterSection } from "./ui/RosterSection";
@@ -28,7 +28,10 @@ import { Reveal } from "./motion/Reveal";
 import { Stagger } from "./motion/Stagger";
 import { MountReveal } from "./motion/MountReveal";
 import { ParallaxKanji } from "./motion/ParallaxKanji";
+import { ScrollScale } from "./motion/ScrollScale";
 import { CountUp } from "./motion/CountUp";
+import { Magnetic } from "./motion/Magnetic";
+import { MatchLoopScene } from "./ui/MatchLoopScene";
 
 export const HUNTERS = [
   { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT", sig: "Phase Blade · 1.5s i-frame dash",   imageSrc: "/art/hunters/kira-07.png", avatarSrc: "/art/hunter-avatars/kira-07.png" },
@@ -47,9 +50,19 @@ export const PageHome = () => (
   <main className="th-canvas">
     <TopNav active="home" />
 
-    {/* HERO */}
-    <section className="th-section flat" style={{ paddingTop: "clamp(28px, 4vw, 56px)", paddingBottom: "clamp(28px, 4vw, 56px)" }}>
-      <div className="split image-r">
+    {/* HERO — full viewport height across all breakpoints */}
+    <section
+      className="th-section flat hero-section"
+      style={{ position: "relative", overflow: "hidden" }}
+    >
+      <HeroVideo />
+      <ParallaxKanji style={{ position: "absolute", top: "12%", right: "8%", pointerEvents: "none", zIndex: 0 }} range={140}>
+        <Kanji size="huge" muted style={{ color: "var(--accent)", opacity: 0.04, fontSize: 420 }}>戦</Kanji>
+      </ParallaxKanji>
+      <ParallaxKanji style={{ position: "absolute", bottom: "8%", left: "30%", pointerEvents: "none", zIndex: 0 }} range={60}>
+        <Kanji size="huge" muted style={{ color: "var(--paper)", opacity: 0.03, fontSize: 240 }}>東京</Kanji>
+      </ParallaxKanji>
+      <div className="split image-r" style={{ position: "relative", zIndex: 2 }}>
         <div className="col" style={{ position: "relative", justifyContent: "center" }}>
           <ParallaxKanji style={{ position: "absolute", top: -30, left: -30, pointerEvents: "none" }} range={80}>
             <Kanji size="huge" muted style={{ color: "var(--paper)", opacity: 0.05, fontSize: 320 }}>狩</Kanji>
@@ -57,18 +70,20 @@ export const PageHome = () => (
           <MountReveal delay={0.08} y={12}>
             <Tag variant="accent" style={{ alignSelf: "flex-start" }}>SEASON 0 · OPERATION KIRIN · LIVE</Tag>
           </MountReveal>
-          <h1 className="h-hero" style={{ marginTop: 14 }}>
-            <MountReveal as="span" delay={0.18} y={20} style={{ display: "block" }}>DROP.</MountReveal>
-            <MountReveal as="span" delay={0.26} y={20} style={{ display: "block" }}>ADAPT.</MountReveal>
-            <MountReveal as="span" delay={0.34} y={20} style={{ display: "block" }}>
-              <span className="accent">OUTLAST.</span>
-            </MountReveal>
-          </h1>
+          <ScrollScale scale={[1, 1.08]} blur={[0, 3]} opacity={[1, 0.4]}>
+            <h1 className="h-hero" style={{ marginTop: 14 }}>
+              <MountReveal as="span" delay={0.18} y={20} style={{ display: "block" }}>DROP.</MountReveal>
+              <MountReveal as="span" delay={0.26} y={20} style={{ display: "block" }}>ADAPT.</MountReveal>
+              <MountReveal as="span" delay={0.34} y={20} style={{ display: "block" }}>
+                <span className="accent">OUTLAST.</span>
+              </MountReveal>
+            </h1>
+          </ScrollScale>
           <MountReveal delay={0.48} y={12}>
             <p style={{ marginTop: 18, maxWidth: 460, color: "var(--text-dark)", fontSize: 14, lineHeight: 1.6, fontFamily: "var(--font-mono)" }}>
               Twenty squads spawn across neo-Tokyo. Push through two combat belts —
               highway, then arcade — toward the contested center. Last team standing wins.
-              Free to play, forever. Drops <span style={{ color: "var(--accent)" }}>06.15.26</span>.
+              Free to play, forever. Drops <span style={{ color: "var(--accent)" }}>07.15.26</span>.
             </p>
           </MountReveal>
           <MountReveal delay={0.58} y={12}>
@@ -178,57 +193,7 @@ export const PageHome = () => (
     <SectionBreak ch="04" title="MATCH LOOP" jp="戦闘循環" />
     <section className="th-section">
       <SectionHead num="04 / THE LOOP" jp="輪廻" title="ONE LOOP." titleAccent="ZERO MERCY." />
-      <div className="split">
-        <div>
-          <p style={{ fontFamily: "var(--font-mono)", fontSize: 14, lineHeight: 1.7, color: "var(--text-dark)", margin: 0 }}>
-            Every match runs the same six-beat loop — but the system rewards squads that read the
-            clock and bend the rhythm. Drop sealed, loot calm, upgrade smart. When the walls fall
-            the only thing that matters is how prepared you were when nobody was watching.
-          </p>
-          <Stagger className="col" style={{ gap: 12, marginTop: 24 }} gap={0.06}>
-            {[
-              ["DROP",     "20 teams · 20 isolated zones · loot basics safely", "落"],
-              ["LOOT",     "scour your zone for weapons, mods, currency",        "拾"],
-              ["UPGRADE",  "install cyberware at street terminals",              "改"],
-              ["CONVERGE", "barriers fall · all squads enter open zone",         "集"],
-              ["FIGHT",    "premium loot · cyber-shards · contested",            "戦"],
-              ["SURVIVE",  "shrinking neon zone, last team wins",                "勝"],
-            ].map((s, i) => (
-              <Reveal key={i} direction="up" distance={12}>
-                <div className="row" style={{ gap: 14, alignItems: "center", padding: "10px 0", borderBottom: "1px dashed var(--border-dark)" }}>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", width: 28 }}>0{i+1}</span>
-                  <Kanji size="md" accent>{s[2]}</Kanji>
-                  <div style={{ fontFamily: "var(--font-hand)", fontSize: "clamp(20px, 2.4vw, 28px)", fontWeight: 700, color: "var(--paper)", minWidth: 130 }}>{s[0]}</div>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted-dark)" }}>{s[1]}</div>
-                </div>
-              </Reveal>
-            ))}
-          </Stagger>
-        </div>
-        <Reveal direction="up" distance={16} className="box dark" style={{ minHeight: 520, position: "relative" }}>
-          <Brackets />
-          <Label style={{ position: "absolute", top: 14, left: 16 }}>FIG.04 · THE LOOP</Label>
-          <svg viewBox="0 0 400 400" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", padding: 30 }}>
-            <circle cx="200" cy="200" r="150" fill="none" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 4" />
-            <circle cx="200" cy="200" r="80"  fill="none" stroke="#4a5159" strokeWidth="1" />
-            {[0, 60, 120, 180, 240, 300].map((deg, i) => {
-              const r = 150;
-              const x = 200 + r * Math.cos((deg - 90) * Math.PI / 180);
-              const y = 200 + r * Math.sin((deg - 90) * Math.PI / 180);
-              const labels = ["DROP", "LOOT", "UPGRADE", "CONVERGE", "FIGHT", "SURVIVE"];
-              return (
-                <g key={i}>
-                  <circle cx={x} cy={y} r="22" fill="var(--accent)" stroke="#fff" strokeWidth="2" />
-                  <text x={x} y={y+5} textAnchor="middle" fill="#fff" fontFamily="var(--font-mono)" fontSize="11" fontWeight="700">{i+1}</text>
-                  <text x={x} y={y+44} textAnchor="middle" fill="#cfd3da" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">{labels[i]}</text>
-                </g>
-              );
-            })}
-            <text x="200" y="195" textAnchor="middle" fill="var(--paper)" fontFamily="var(--font-hand)" fontSize="36" fontWeight="700">30 MIN</text>
-            <text x="200" y="222" textAnchor="middle" fill="#9aa1aa" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="2">PER MATCH</text>
-          </svg>
-        </Reveal>
-      </div>
+      <MatchLoopScene />
     </section>
 
     {/* WEAPONS + CYBER teaser */}
@@ -361,7 +326,7 @@ export const PageHome = () => (
         </Reveal>
         <Reveal direction="up" distance={16}>
           <h2 className="th-sec-title" style={{ position: "relative", fontSize: "clamp(48px, 9vw, 110px)" }}>
-            DROPS <span className="accent">06.15.26</span>
+            DROPS <span className="accent">07.15.26</span>
           </h2>
         </Reveal>
         <Reveal direction="up" distance={16}>
@@ -376,7 +341,9 @@ export const PageHome = () => (
           <EmailSignup />
         </Reveal>
         <Reveal direction="up" distance={16} className="row" style={{ justifyContent: "center", gap: 12, marginTop: 28, position: "relative", flexWrap: "wrap" }}>
-          <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
+          <Magnetic>
+            <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
+          </Magnetic>
         </Reveal>
       </Stagger>
       <div style={{ marginTop: 16, fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted-dark)", letterSpacing: "0.14em", position: "relative" }}>

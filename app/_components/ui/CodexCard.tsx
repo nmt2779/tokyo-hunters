@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Kanji, Tag } from "../wireframe-primitives";
+import { Tilt3D } from "../motion/Tilt3D";
 
 export type CodexCategory = "WEAPON" | "CYBER";
 export type CodexRarity = "COMMON" | "RARE" | "EPIC" | "LEGENDARY" | "EXOTIC";
@@ -15,7 +18,8 @@ export type CodexItem = {
 };
 
 export const CodexCard = ({ item }: { item: CodexItem }) => (
-  <div className="codex-card">
+  <Tilt3D max={5} glare>
+    <div className="codex-card">
     <div className="row" style={{ alignItems: "baseline", justifyContent: "space-between" }}>
       <Tag variant={item.category === "CYBER" ? "accent" : "ghost-dark"}>{item.category}</Tag>
       <span className="rarity">{item.rarity}</span>
@@ -56,5 +60,6 @@ export const CodexCard = ({ item }: { item: CodexItem }) => (
     </div>
     <div className="name">{item.name}</div>
     <div className="type">{item.type}</div>
-  </div>
+    </div>
+  </Tilt3D>
 );

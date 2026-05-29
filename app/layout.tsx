@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Caveat, Inter, JetBrains_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import { EmberLayer } from "./_components/motion/EmberLayer";
+import { CursorGlow } from "./_components/motion/CursorGlow";
+import { ScrollProgress } from "./_components/motion/ScrollProgress";
 
 const caveat = Caveat({
   subsets: ["latin"],
@@ -37,11 +40,11 @@ export const metadata: Metadata = {
     template: "%s · Tokyo Hunters",
   },
   description:
-    "100-player royale set in neo-Tokyo 2100. 20 squads, 2 combat belts, one contested center. Free to play. Drops 06.15.26.",
+    "100-player royale set in neo-Tokyo 2100. 20 squads, 2 combat belts, one contested center. Free to play. Drops 07.15.26.",
   openGraph: {
     title: "Tokyo Hunters · 100 IN. 1 OUT.",
     description:
-      "100-player royale set in neo-Tokyo 2100. Drops 06.15.26.",
+      "100-player royale set in neo-Tokyo 2100. Drops 07.15.26.",
     type: "website",
     locale: "en_US",
   },
@@ -49,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Tokyo Hunters · 100 IN. 1 OUT.",
     description:
-      "100-player royale set in neo-Tokyo 2100. Drops 06.15.26.",
+      "100-player royale set in neo-Tokyo 2100. Drops 07.15.26.",
   },
 };
 
@@ -61,7 +64,13 @@ export default function RootLayout({
       lang="en"
       className={`${caveat.variable} ${jetbrains.variable} ${inter.variable} ${notoJp.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <EmberLayer />
+        <CursorGlow />
+        <ScrollProgress />
+        {children}
+        <div className="grain-overlay" aria-hidden />
+      </body>
     </html>
   );
 }

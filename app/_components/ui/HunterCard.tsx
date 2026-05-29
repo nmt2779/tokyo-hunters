@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { ViewTransition } from "react";
 import { Kanji } from "../wireframe-primitives";
+import { Tilt3D } from "../motion/Tilt3D";
 
 export type Hunter = {
   id: string;
@@ -31,19 +35,19 @@ export const HunterCard = (props: Props) => {
     <>
       {hunter.imageSrc && (
         <>
-          <Image
-            src={hunter.imageSrc}
-            alt={hunter.name}
-            fill
-            sizes="(max-width: 720px) 50vw, 220px"
-            style={{
-              objectFit: "cover",
-              // Keep the face in frame regardless of card aspect ratio.
-              // Portraits are 3:4 / 5:6 — focal point is upper third.
-              objectPosition: "center 20%",
-              zIndex: 0,
-            }}
-          />
+          <ViewTransition name={`hunter-portrait-${hunter.id}`} share="morph">
+            <Image
+              src={hunter.imageSrc}
+              alt={hunter.name}
+              fill
+              sizes="(max-width: 720px) 50vw, 220px"
+              style={{
+                objectFit: "cover",
+                objectPosition: "center 20%",
+                zIndex: 0,
+              }}
+            />
+          </ViewTransition>
           <div
             style={{
               position: "absolute",
@@ -115,25 +119,29 @@ export const HunterCard = (props: Props) => {
 
   if (isList) {
     return (
-      <Link
-        className="hunter-card"
-        href={`/hunters/${hunter.id}`}
-        style={{ cursor: "pointer", textDecoration: "none" }}
-      >
-        {body}
-      </Link>
+      <Tilt3D max={6} glare>
+        <Link
+          className="hunter-card"
+          href={`/hunters/${hunter.id}`}
+          style={{ cursor: "pointer", textDecoration: "none" }}
+        >
+          {body}
+        </Link>
+      </Tilt3D>
     );
   }
 
   const { onClick } = props;
   return (
-    <div
-      className={`hunter-card ${hunter.selected ? "selected" : ""}`}
-      onClick={onClick}
-      role={onClick ? "button" : undefined}
-      tabIndex={onClick ? 0 : undefined}
-    >
-      {body}
-    </div>
+    <Tilt3D max={6} glare>
+      <div
+        className={`hunter-card ${hunter.selected ? "selected" : ""}`}
+        onClick={onClick}
+        role={onClick ? "button" : undefined}
+        tabIndex={onClick ? 0 : undefined}
+      >
+        {body}
+      </div>
+    </Tilt3D>
   );
 };

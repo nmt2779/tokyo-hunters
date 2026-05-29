@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { Tilt3D } from "../motion/Tilt3D";
 
 export const MediaThumb = ({
   src,
@@ -53,10 +56,16 @@ export const MediaThumb = ({
 
   if (href) {
     return (
-      <a href={href} style={wrapStyle} aria-label={label}>
-        {inner}
-      </a>
+      <Tilt3D max={5} glare>
+        <a href={href} style={wrapStyle} aria-label={label}>
+          {inner}
+        </a>
+      </Tilt3D>
     );
   }
-  return <div style={wrapStyle}>{inner}</div>;
+  return (
+    <Tilt3D max={5} glare>
+      <div style={wrapStyle}>{inner}</div>
+    </Tilt3D>
+  );
 };

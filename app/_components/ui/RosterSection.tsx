@@ -25,12 +25,11 @@ export const RosterSection = ({
       {/* Big preview — left */}
       <Link
         href={`/hunters/${selected.id}`}
-        className="box dark"
+        className="box dark roster-preview"
         style={{
           borderColor: "var(--accent)",
           position: "relative",
           width: "100%",
-          aspectRatio: "3 / 4",
           overflow: "hidden",
           display: "block",
           textDecoration: "none",
@@ -45,7 +44,6 @@ export const RosterSection = ({
             fill
             sizes="(max-width: 820px) 100vw, 540px"
             style={{ objectFit: "cover", objectPosition: "center 20%" }}
-            // key forces re-mount on selection change for clean fade
             key={selected.id}
           />
         ) : (
@@ -135,7 +133,7 @@ export const RosterSection = ({
       </Link>
 
       {/* Roster grid — right */}
-      <div className="col" style={{ gap: 14 }}>
+      <div className="roster-side">
         <div className="chips">
           {["ASSAULT", "RECON", "SUPPORT", "CONTROL"].map((r) => (
             <Tag
@@ -157,13 +155,7 @@ export const RosterSection = ({
             10/10 UNLOCKED
           </span>
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(76px, 1fr))",
-            gap: 10,
-          }}
-        >
+        <div className="roster-avatar-grid">
           {hunters.map((h) => (
             <HunterAvatar
               key={h.id}
