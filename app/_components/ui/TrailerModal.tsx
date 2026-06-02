@@ -93,6 +93,18 @@ export function TrailerModal({ src = "/game-trailer.mp4" }: { src?: string }) {
       role="dialog"
       aria-modal="true"
       aria-label="Game trailer"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 1000,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "clamp(16px, 4vw, 56px)",
+        background: "rgba(3, 5, 8, 0.86)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+      }}
       onClick={(e) => {
         if (e.target === e.currentTarget) close();
       }}
@@ -101,11 +113,40 @@ export function TrailerModal({ src = "/game-trailer.mp4" }: { src?: string }) {
         type="button"
         className="trailer-modal__close"
         aria-label="Close trailer"
+        style={{
+          position: "absolute",
+          top: "clamp(12px, 3vw, 28px)",
+          right: "clamp(12px, 3vw, 28px)",
+          zIndex: 1001,
+          width: 44,
+          height: 44,
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "transparent",
+          border: "1px solid var(--border-dark)",
+          color: "var(--paper)",
+          fontSize: 18,
+          lineHeight: 1,
+          cursor: "pointer",
+        }}
         onClick={close}
       >
         ✕
       </button>
-      <div className="trailer-modal__frame">
+      <div
+        className="trailer-modal__frame"
+        style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: 1100,
+          aspectRatio: "16 / 9",
+          background: "#000",
+          border: "1px solid var(--border-dark)",
+          boxShadow: "0 24px 80px rgba(0, 0, 0, 0.6)",
+          overflow: "hidden",
+        }}
+      >
         <video
           ref={videoRef}
           src={src}
@@ -113,6 +154,13 @@ export function TrailerModal({ src = "/game-trailer.mp4" }: { src?: string }) {
           autoPlay
           playsInline
           preload="none"
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "block",
+            objectFit: "contain",
+            background: "#000",
+          }}
         />
       </div>
     </div>

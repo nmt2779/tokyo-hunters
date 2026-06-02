@@ -1581,9 +1581,9 @@ body.vp-mob .dist-row > span:nth-last-child(-n + 2),
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(10, 13, 18, 0.35) 0%,
-    rgba(10, 13, 18, 0.55) 50%,
-    rgba(10, 13, 18, 0.85) 100%
+    rgba(10, 13, 18, 0.18) 0%,
+    rgba(10, 13, 18, 0.34) 50%,
+    rgba(10, 13, 18, 0.62) 100%
   );
   pointer-events: none;
   z-index: 1;
