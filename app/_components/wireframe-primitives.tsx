@@ -212,10 +212,16 @@ export const NAV_ITEMS: { id: RouteKey; label: string }[] = [
 
 export const TopNav = ({ active = "home" }: { active?: RouteKey }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 60);
+      // Reveal the nav Download CTA once the hero is mostly out of view.
+      setPastHero(y > window.innerHeight - 80);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -242,7 +248,7 @@ export const TopNav = ({ active = "home" }: { active?: RouteKey }) => {
 
   return (
     <nav
-      className={`th-nav${scrolled ? " th-nav--scrolled" : ""}${open ? " th-nav--open" : ""}`}
+      className={`th-nav${scrolled ? " th-nav--scrolled" : ""}${open ? " th-nav--open" : ""}${pastHero ? " th-nav--past-hero" : ""}`}
       aria-label="Primary navigation"
     >
       <button
@@ -255,7 +261,12 @@ export const TopNav = ({ active = "home" }: { active?: RouteKey }) => {
       >
         {open ? "✕" : "≡"}
       </button>
-      <Logo />
+      <div className="nav-left">
+        <Logo />
+        <div className="nav-cta" aria-hidden={!pastHero}>
+          <Btn variant="primary" href="/game">↓ DOWNLOAD NOW</Btn>
+        </div>
+      </div>
       <div className="nav-links" id="primary-menu">
         {NAV_ITEMS.map((it) => (
           <Link
