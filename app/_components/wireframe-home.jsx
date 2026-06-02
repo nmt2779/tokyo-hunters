@@ -22,6 +22,7 @@ import { HunterPreviewPanel } from "./ui/HunterPreviewPanel";
 import { MediaThumb } from "./ui/MediaThumb";
 import { RosterSection } from "./ui/RosterSection";
 import { ScrollToTop } from "./ui/ScrollToTop";
+import { TrailerModal } from "./ui/TrailerModal";
 import { Pillar } from "./ui/Pillar";
 import { StatBlock } from "./ui/StatBlock";
 import { Reveal } from "./motion/Reveal";
@@ -274,7 +275,7 @@ export const PageHome = () => (
     <section className="th-section alt">
       <SectionHead num="07 / MEDIA" jp="映像" title="SEE IT" titleAccent="IN MOTION." />
       <div className="media-stack">
-        <Reveal direction="up" distance={20} as="a" amount={0.2} href="#trailer" className="media-trailer" aria-label="Watch trailer · 2:34">
+        <Reveal direction="up" distance={20} as="a" amount={0.2} href="#trailer" className="media-trailer" aria-label="Watch trailer · 0:15">
           <Image
             src="/art/media/trailer-poster.png"
             alt=""
@@ -285,7 +286,7 @@ export const PageHome = () => (
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2 }}>
             <div style={{ width: 76, height: 76, borderRadius: "50%", background: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 30, boxShadow: "0 6px 24px rgba(0,0,0,0.5)" }}>▶</div>
           </div>
-          <div style={{ position: "absolute", bottom: 12, left: 12, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--paper)", letterSpacing: "0.14em", background: "rgba(0,0,0,0.65)", padding: "4px 8px", zIndex: 2 }}>TRAILER · 2:34</div>
+          <div style={{ position: "absolute", bottom: 12, left: 12, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--paper)", letterSpacing: "0.14em", background: "rgba(0,0,0,0.65)", padding: "4px 8px", zIndex: 2 }}>TRAILER · 0:15</div>
         </Reveal>
         <Stagger className="media-thumbs" gap={0.06}>
           <Reveal direction="up" distance={12}><MediaThumb src="/art/media/gameplay.png"    label="GAMEPLAY · 0:48"    /></Reveal>
@@ -342,7 +343,7 @@ export const PageHome = () => (
         </Reveal>
         <Reveal direction="up" distance={16} className="row" style={{ justifyContent: "center", gap: 12, marginTop: 28, position: "relative", flexWrap: "wrap" }}>
           <Magnetic>
-            <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
+            <Btn variant="dark" size="xl" href="#trailer" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
           </Magnetic>
         </Reveal>
       </Stagger>
@@ -353,5 +354,6 @@ export const PageHome = () => (
 
     <Footer />
     <ScrollToTop />
+    <TrailerModal />
   </main>
 );

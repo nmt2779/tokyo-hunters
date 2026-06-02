@@ -21,7 +21,7 @@ type NetworkInformation = {
  * reduced-motion and Save-Data by sticking with the poster.
  */
 export function HeroVideo({
-  src = "/trailer.mp4",
+  src = "/hero-background.mp4",
   poster = "/art/hero-poster.jpg",
   className,
   style,

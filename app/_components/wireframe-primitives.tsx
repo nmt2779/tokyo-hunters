@@ -394,7 +394,7 @@ export const HeroCTAs = () => (
       <Btn variant="primary" size="xl" href="/game">↓ DOWNLOAD NOW</Btn>
     </Magnetic>
     <Magnetic>
-      <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
+      <Btn variant="dark" size="xl" href="#trailer" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
     </Magnetic>
   </div>
 );
