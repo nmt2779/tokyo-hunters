@@ -212,6 +212,7 @@ export const NAV_ITEMS: { id: RouteKey; label: string }[] = [
 
 export const TopNav = ({ active = "home" }: { active?: RouteKey }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -220,27 +221,54 @@ export const TopNav = ({ active = "home" }: { active?: RouteKey }) => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close the mobile menu on Escape.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Lock body scroll while the mobile menu is open.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   return (
     <nav
-      className={`th-nav${scrolled ? " th-nav--scrolled" : ""}`}
+      className={`th-nav${scrolled ? " th-nav--scrolled" : ""}${open ? " th-nav--open" : ""}`}
       aria-label="Primary navigation"
     >
+      <button
+        type="button"
+        className="hamburger"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        aria-controls="primary-menu"
+        onClick={() => setOpen((v) => !v)}
+      >
+        {open ? "✕" : "≡"}
+      </button>
       <Logo />
-      <div className="nav-links">
+      <div className="nav-links" id="primary-menu">
         {NAV_ITEMS.map((it) => (
           <Link
             key={it.id}
             className={`nav-link ${active === it.id ? "active" : ""}`}
             href={ROUTES[it.id]}
+            onClick={() => setOpen(false)}
           >
             {it.label}
           </Link>
         ))}
       </div>
-      <div className="nav-cta">
-        <Btn variant="primary" href="/game">► PLAY FREE</Btn>
-        <span className="hamburger">≡</span>
-      </div>
+      <span className="nav-spacer" aria-hidden />
     </nav>
   );
 };
@@ -353,7 +381,7 @@ export const Footer = () => (
 export const HeroCTAs = () => (
   <div className="row" style={{ gap: 12, marginTop: 24, flexWrap: "wrap" }}>
     <Magnetic>
-      <Btn variant="primary" size="xl" href="/game">► PLAY FREE NOW</Btn>
+      <Btn variant="primary" size="xl" href="/game">↓ DOWNLOAD NOW</Btn>
     </Magnetic>
     <Magnetic>
       <Btn variant="dark" size="xl" href="/news" style={{ borderColor: "var(--paper)" }}>▶ WATCH TRAILER</Btn>
