@@ -263,9 +263,6 @@ export const TopNav = ({ active = "home" }: { active?: RouteKey }) => {
       </button>
       <div className="nav-left">
         <Logo />
-        <div className="nav-cta" aria-hidden={!pastHero}>
-          <Btn variant="primary" href="/game">↓ DOWNLOAD NOW</Btn>
-        </div>
       </div>
       <div className="nav-links" id="primary-menu">
         {NAV_ITEMS.map((it) => (
@@ -279,7 +276,9 @@ export const TopNav = ({ active = "home" }: { active?: RouteKey }) => {
           </Link>
         ))}
       </div>
-      <span className="nav-spacer" aria-hidden />
+      <div className="nav-cta" aria-hidden={!pastHero}>
+        <Btn variant="primary" href="/game">↓ DOWNLOAD NOW</Btn>
+      </div>
     </nav>
   );
 };

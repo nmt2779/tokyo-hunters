@@ -513,35 +513,31 @@ body.no-jp .kanji { display: none !important; }
   gap: 16px;
   min-width: 0;
 }
-/* Download CTA in the nav — hidden until scrolled past the hero.
-   Width animates 0 → auto so the logo slides aside instead of the
-   button overlapping the centered links. */
+/* Download CTA in the nav (right side) — hidden until scrolled past the
+   hero, then fades + slides in. Right-aligned to match the content edge. */
 .th-nav .nav-cta {
-  display: grid;
-  grid-template-columns: 0fr;
+  display: flex;
+  justify-content: flex-end;
   opacity: 0;
-  margin-left: 0;
+  transform: translateX(8px);
   pointer-events: none;
   transition:
-    grid-template-columns var(--motion-base) var(--ease-out),
     opacity var(--motion-base) var(--ease-out),
-    margin-left var(--motion-base) var(--ease-out);
+    transform var(--motion-base) var(--ease-out);
 }
-.th-nav .nav-cta > * { min-width: 0; overflow: hidden; }
 .th-nav .nav-cta .btn {
   padding: 9px 16px;
   font-size: 11px;
   white-space: nowrap;
 }
 .th-nav--past-hero .nav-cta {
-  grid-template-columns: 1fr;
   opacity: 1;
-  margin-left: 4px;
+  transform: translateX(0);
   pointer-events: auto;
 }
 
-/* Desktop: 3-column grid so links center against the whole bar
-   (logo + cta left · links center · spacer right balances the left). */
+/* Desktop: 3-column grid — logo left · links center · CTA right.
+   The two 1fr side columns are equal width so links stay truly centered. */
 @media (min-width: 1025px) {
   .th-nav {
     display: grid;
@@ -552,7 +548,7 @@ body.no-jp .kanji { display: none !important; }
   }
   .th-nav .nav-left { justify-self: start; min-width: 0; }
   .th-nav .nav-links { justify-self: center; }
-  .th-nav .nav-spacer { display: block; justify-self: end; width: 1px; height: 1px; }
+  .th-nav .nav-cta { justify-self: end; }
 }
 /* Tighter link spacing on mid-desktop so the row + CTA never collide. */
 @media (min-width: 1025px) and (max-width: 1600px) {
@@ -587,9 +583,8 @@ body.no-jp .kanji { display: none !important; }
   transition: border-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
 }
 .th-nav .hamburger:hover { border-color: var(--accent); color: var(--accent); }
-.th-nav .nav-spacer { display: none; width: 40px; height: 40px; }
 
-/* Mobile / tablet: hamburger left · logo centered · spacer balances right.
+/* Mobile / tablet: hamburger left · logo centered · empty col balances right.
    nav-links collapse into a dropdown panel toggled by the hamburger. */
 @media (max-width: 1024px) {
   .th-nav {
@@ -600,9 +595,8 @@ body.no-jp .kanji { display: none !important; }
     flex-wrap: nowrap;
     padding: 12px 16px;
   }
-  .th-nav .hamburger { display: inline-flex; justify-self: start; }
-  .th-nav .nav-spacer { display: block; justify-self: end; }
-  .th-nav .nav-left { justify-self: center; gap: 0; }
+  .th-nav .hamburger { display: inline-flex; justify-self: start; grid-column: 1; }
+  .th-nav .nav-left { justify-self: center; gap: 0; grid-column: 2; }
   /* CTA stays in the hero on mobile — avoid crowding the compact bar. */
   .th-nav .nav-cta { display: none; }
   .th-nav .nav-links {
