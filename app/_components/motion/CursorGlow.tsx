@@ -74,8 +74,9 @@ export function CursorGlow() {
         height: 400,
         borderRadius: "50%",
         background:
-          "radial-gradient(circle, rgba(255,42,61,0.18) 0%, rgba(255,42,61,0.06) 35%, transparent 70%)",
-        mixBlendMode: "screen",
+          "radial-gradient(circle, rgba(255,42,61,0.16) 0%, rgba(255,42,61,0.05) 35%, transparent 70%)",
+        /* No mix-blend-mode: blending on every pointer move forced a
+           full-viewport recomposite. Plain alpha gradient is far cheaper. */
         pointerEvents: "none",
         zIndex: 1,
         opacity: 0,

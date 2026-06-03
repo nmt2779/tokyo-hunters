@@ -32,12 +32,15 @@ export function EmberLayer() {
     () => ({
       fullScreen: { enable: false },
       background: { color: { value: "transparent" } },
-      fpsLimit: coarse ? 30 : 60,
+      // Cap at 30fps — atmosphere particles don't need 60. Halves the
+      // canvas redraw cost (and the recomposite it triggered each frame).
+      fpsLimit: 30,
       detectRetina: true,
       pauseOnBlur: true,
       pauseOnOutsideViewport: true,
       particles: {
-        number: { value: coarse ? 28 : 56, density: { enable: true } },
+        // Fewer particles → less per-frame work + less memory.
+        number: { value: coarse ? 16 : 28, density: { enable: true } },
         color: { value: ["#ff2a3d", "#ff7a3d", "#ffb14c"] },
         shape: { type: "circle" },
         opacity: {
