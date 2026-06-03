@@ -7,8 +7,8 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function OpengraphImage() {
-  const bg = await readFile(join(process.cwd(), "public/art/og-bg.png"));
-  const bgDataUrl = `data:image/png;base64,${bg.toString("base64")}`;
+  const bg = await readFile(join(process.cwd(), "public/art/og-bg.jpg"));
+  const bgDataUrl = `data:image/jpeg;base64,${bg.toString("base64")}`;
 
   return new ImageResponse(
     (

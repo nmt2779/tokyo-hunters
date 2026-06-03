@@ -4,9 +4,14 @@ import { motion, useReducedMotion } from "motion/react";
 import { createElement, type CSSProperties, type ElementType, type ReactNode } from "react";
 import { DURATION, EASE } from "../../_lib/motion";
 
+const motionComponents = {
+  div: motion.div,
+  span: motion.span,
+} satisfies Record<string, ElementType>;
+
 type MountRevealProps = {
   children: ReactNode;
-  as?: ElementType;
+  as?: keyof typeof motionComponents;
   y?: number;
   delay?: number;
   duration?: number;
@@ -33,7 +38,7 @@ export function MountReveal({
     return createElement(as, { className, style }, children);
   }
 
-  const MotionComponent = motion.create(as);
+  const MotionComponent = motionComponents[as] as ElementType;
 
   return (
     <MotionComponent

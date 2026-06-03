@@ -70,7 +70,6 @@ const SPACING = [
 
 const sectionStyle = { padding: "clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px)" };
 const subHeadStyle = { fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.18em", marginBottom: 16 };
-const cardGrid = { display: "grid", gap: 24 } as const;
 const swatchBox = (bg: string) => ({
   width: "100%", height: 80,
   background: bg, border: "1px solid var(--border-dark)",
@@ -84,7 +83,7 @@ export default function DesignSystemPage() {
       {/* Page intro */}
       <section className="th-section flat" style={sectionStyle}>
         <div className="th-sec-head">
-          <div className="num">// 00 / DESIGN SYSTEM</div>
+          <div className="num">{"//"} 00 / DESIGN SYSTEM</div>
           <div className="rule" />
           <Kanji size="md" accent>規範</Kanji>
         </div>
@@ -408,11 +407,11 @@ export default function DesignSystemPage() {
             CATEGORY · WEAPON | CYBER &nbsp;·&nbsp; RARITY · COMMON | RARE | EPIC | LEGENDARY | EXOTIC
           </div>
           <div className="grid-5" style={{ marginTop: 18 }}>
-            <CodexCard item={{ category: "WEAPON", name: "TANTO-X",    type: "ENERGY SMG",    rarity: "RARE",      kanji: "短", imageSrc: "/art/weapons/tanto-x.png" }} />
-            <CodexCard item={{ category: "WEAPON", name: "RAIDEN-9",   type: "RAILGUN",       rarity: "EXOTIC",    kanji: "雷", imageSrc: "/art/weapons/raiden-9.png" }} />
-            <CodexCard item={{ category: "CYBER",  name: "VESPA-OS",   type: "NEURAL TIER 3", rarity: "EPIC",      kanji: "脳", imageSrc: "/art/cyber/vespa-os.png" }} />
-            <CodexCard item={{ category: "CYBER",  name: "ARGUS EYE",  type: "VISION TIER 2", rarity: "RARE",      kanji: "眼", imageSrc: "/art/cyber/argus-eye.png" }} />
-            <CodexCard item={{ category: "CYBER",  name: "TITAN ARMS", type: "COMBAT TIER 4", rarity: "LEGENDARY", kanji: "腕", imageSrc: "/art/cyber/titan-arms.png" }} />
+            <CodexCard item={{ category: "WEAPON", name: "TANTO-X",    type: "ENERGY SMG",    rarity: "RARE",      kanji: "短", imageSrc: "/art/weapons/tanto-x.jpg" }} />
+            <CodexCard item={{ category: "WEAPON", name: "RAIDEN-9",   type: "RAILGUN",       rarity: "EXOTIC",    kanji: "雷", imageSrc: "/art/weapons/raiden-9.jpg" }} />
+            <CodexCard item={{ category: "CYBER",  name: "VESPA-OS",   type: "NEURAL TIER 3", rarity: "EPIC",      kanji: "脳", imageSrc: "/art/cyber/vespa-os.jpg" }} />
+            <CodexCard item={{ category: "CYBER",  name: "ARGUS EYE",  type: "VISION TIER 2", rarity: "RARE",      kanji: "眼", imageSrc: "/art/cyber/argus-eye.jpg" }} />
+            <CodexCard item={{ category: "CYBER",  name: "TITAN ARMS", type: "COMBAT TIER 4", rarity: "LEGENDARY", kanji: "腕", imageSrc: "/art/cyber/titan-arms.jpg" }} />
           </div>
         </div>
 

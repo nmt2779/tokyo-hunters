@@ -6,6 +6,11 @@ import { DURATION, EASE, REVEAL_DISTANCE } from "../../_lib/motion";
 
 type Direction = "up" | "down" | "left" | "right" | "none";
 
+const motionComponents = {
+  a: motion.a,
+  div: motion.div,
+} satisfies Record<string, ElementType>;
+
 const offset = (direction: Direction, distance: number) => {
   switch (direction) {
     case "up":    return { x: 0, y: distance };
@@ -28,11 +33,13 @@ type RevealOwnProps = {
   style?: CSSProperties;
 };
 
-type RevealProps<T extends ElementType> = RevealOwnProps & {
+type RevealElement = keyof typeof motionComponents;
+
+type RevealProps<T extends RevealElement> = RevealOwnProps & {
   as?: T;
 } & Omit<ComponentProps<T>, keyof RevealOwnProps | "as">;
 
-export function Reveal<T extends ElementType = "div">({
+export function Reveal<T extends RevealElement = "div">({
   children,
   as,
   direction = "up",
@@ -46,11 +53,11 @@ export function Reveal<T extends ElementType = "div">({
   ...rest
 }: RevealProps<T>) {
   const reduced = useReducedMotion();
-  const Component = (as ?? "div") as ElementType;
+  const component = as ?? "div";
 
   if (reduced) {
     return createElement(
-      Component,
+      component,
       { className, style, ...rest },
       children
     );
@@ -67,7 +74,7 @@ export function Reveal<T extends ElementType = "div">({
     },
   };
 
-  const MotionComponent = motion.create(Component);
+  const MotionComponent = motionComponents[component] as ElementType;
 
   return (
     <MotionComponent

@@ -35,16 +35,16 @@ import { Magnetic } from "./motion/Magnetic";
 import { MatchLoopScene } from "./ui/MatchLoopScene";
 
 export const HUNTERS = [
-  { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT", sig: "Phase Blade · 1.5s i-frame dash",   imageSrc: "/art/hunters/kira-07.png", avatarSrc: "/art/hunter-avatars/kira-07.png" },
-  { id: "oni",    name: "ONI",     k: "鬼", role: "CONTROL", sig: "Kinetic Wall · deployable cover",  selected: true, imageSrc: "/art/hunters/oni.png",     avatarSrc: "/art/hunter-avatars/oni.png" },
-  { id: "ghost",  name: "GHOST",   k: "影", role: "RECON",   sig: "Spectral Scan · 30m wallhack",     imageSrc: "/art/hunters/ghost.png",   avatarSrc: "/art/hunter-avatars/ghost.png" },
-  { id: "medic",  name: "MEDIC-9", k: "癒", role: "SUPPORT", sig: "Nano-Mist · squad heal AOE",       imageSrc: "/art/hunters/medic-9.png", avatarSrc: "/art/hunter-avatars/medic-9.png" },
-  { id: "ronin",  name: "RONIN",   k: "侍", role: "ASSAULT", sig: "Twin Katana · execute proc",       imageSrc: "/art/hunters/ronin.png",   avatarSrc: "/art/hunter-avatars/ronin.png" },
-  { id: "moth",   name: "MOTH",    k: "蛾", role: "RECON",   sig: "Drone Swarm · vision uplink",      imageSrc: "/art/hunters/moth.png",    avatarSrc: "/art/hunter-avatars/moth.png" },
-  { id: "fuji",   name: "FUJI",    k: "藤", role: "CONTROL", sig: "Vine Trap · root + dmg",           imageSrc: "/art/hunters/fuji.png",    avatarSrc: "/art/hunter-avatars/fuji.png" },
-  { id: "nova",   name: "NOVA",    k: "星", role: "SUPPORT", sig: "Resurrect Beam · revive ally",     imageSrc: "/art/hunters/nova.png",    avatarSrc: "/art/hunter-avatars/nova.png" },
-  { id: "raijin", name: "RAIJIN",  k: "雷", role: "ASSAULT", sig: "Storm Burst · chain dmg",          imageSrc: "/art/hunters/raijin.png",  avatarSrc: "/art/hunter-avatars/raijin.png" },
-  { id: "zen",    name: "ZEN",     k: "禅", role: "RECON",   sig: "Time Echo · rewind 4s",            isNew: true, imageSrc: "/art/hunters/zen.png",     avatarSrc: "/art/hunter-avatars/zen.png" },
+  { id: "kira",   name: "KIRA-07", k: "斬", role: "ASSAULT", sig: "Phase Blade · 1.5s i-frame dash",   imageSrc: "/art/hunters/kira-07.jpg", avatarSrc: "/art/hunter-avatars/kira-07.jpg" },
+  { id: "oni",    name: "ONI",     k: "鬼", role: "CONTROL", sig: "Kinetic Wall · deployable cover",  selected: true, imageSrc: "/art/hunters/oni.jpg",     avatarSrc: "/art/hunter-avatars/oni.jpg" },
+  { id: "ghost",  name: "GHOST",   k: "影", role: "RECON",   sig: "Spectral Scan · 30m wallhack",     imageSrc: "/art/hunters/ghost.jpg",   avatarSrc: "/art/hunter-avatars/ghost.jpg" },
+  { id: "medic",  name: "MEDIC-9", k: "癒", role: "SUPPORT", sig: "Nano-Mist · squad heal AOE",       imageSrc: "/art/hunters/medic-9.jpg", avatarSrc: "/art/hunter-avatars/medic-9.jpg" },
+  { id: "ronin",  name: "RONIN",   k: "侍", role: "ASSAULT", sig: "Twin Katana · execute proc",       imageSrc: "/art/hunters/ronin.jpg",   avatarSrc: "/art/hunter-avatars/ronin.jpg" },
+  { id: "moth",   name: "MOTH",    k: "蛾", role: "RECON",   sig: "Drone Swarm · vision uplink",      imageSrc: "/art/hunters/moth.jpg",    avatarSrc: "/art/hunter-avatars/moth.jpg" },
+  { id: "fuji",   name: "FUJI",    k: "藤", role: "CONTROL", sig: "Vine Trap · root + dmg",           imageSrc: "/art/hunters/fuji.jpg",    avatarSrc: "/art/hunter-avatars/fuji.jpg" },
+  { id: "nova",   name: "NOVA",    k: "星", role: "SUPPORT", sig: "Resurrect Beam · revive ally",     imageSrc: "/art/hunters/nova.jpg",    avatarSrc: "/art/hunter-avatars/nova.jpg" },
+  { id: "raijin", name: "RAIJIN",  k: "雷", role: "ASSAULT", sig: "Storm Burst · chain dmg",          imageSrc: "/art/hunters/raijin.jpg",  avatarSrc: "/art/hunter-avatars/raijin.jpg" },
+  { id: "zen",    name: "ZEN",     k: "禅", role: "RECON",   sig: "Time Echo · rewind 4s",            isNew: true, imageSrc: "/art/hunters/zen.jpg",     avatarSrc: "/art/hunter-avatars/zen.jpg" },
 ];
 
 export const PageHome = () => (
@@ -112,7 +112,7 @@ export const PageHome = () => (
             kanji="禅"
             sig={'"TIME ECHO" · REWIND 4s · SEASON 0 DEBUT'}
             imageLabel="HERO PORTRAIT · ZEN · neon rim light"
-            imageSrc="/art/hunters/zen.png"
+            imageSrc="/art/hunters/zen.jpg"
             imageAlt="ZEN — recon hunter, Season 0 debut"
             href="/hunters/zen"
             viewTransitionName="hunter-portrait-zen"
@@ -139,26 +139,26 @@ export const PageHome = () => (
             n: "I",   t: "100-PLAYER ROYALE",  k: "戦",
             d: "20 squads · 20 spawn zones · 30-minute match",
             body: "Every match is 100 hunters split into 20 squads of five, dropped across a 12 km² slice of neo-Tokyo. No queues. No fillers. Just one collapsing city and a 30-minute clock that won't blink.",
-            img: "/art/pillars/royale.png", alt: "100-player royale — Shibuya containment ring",
+            img: "/art/pillars/royale.jpg", alt: "100-player royale — Shibuya containment ring",
           },
           {
             n: "II",  t: "10 UNIQUE HUNTERS",  k: "鬼",
             d: "Four roles · ranked queue · hand-tuned kits",
             body: "Ten hunters across four roles — Assault, Recon, Control, Support — each with a hand-tuned passive, active and ultimate. No skill trees. No grind. Pick a hunter, learn the kit, master it for life.",
-            img: "/art/pillars/hunters.png", alt: "Ten hunters squad lineup",
+            img: "/art/pillars/hunters.jpg", alt: "Ten hunters squad lineup",
             rev: true,
           },
           {
             n: "III", t: "CYBERWARE LOOT",     k: "改",
             d: "40+ implants · install mid-match",
             body: "Forty-plus cybernetic implants pulled live from terminals on the map — neural OS, ocular mods, combat augments. Stack three to rewrite your kit mid-match. Lose them all if your squad falls.",
-            img: "/art/pillars/cyberware.png", alt: "Cybernetic implant install close-up",
+            img: "/art/pillars/cyberware.jpg", alt: "Cybernetic implant install close-up",
           },
           {
             n: "IV",  t: "5-STACK SQUADS",     k: "組",
             d: "Voice ping · callouts · role bonus XP",
             body: "Five-stack only. Built-in voice with directional pings, contextual callouts and a role-queue bonus that rewards balanced compositions. Soloqueue exists — but the game is built for the squad.",
-            img: "/art/pillars/squads.png", alt: "Five-stack squad in V-formation",
+            img: "/art/pillars/squads.jpg", alt: "Five-stack squad in V-formation",
             rev: true,
           },
         ].map((f, i) => (
@@ -203,11 +203,11 @@ export const PageHome = () => (
       <SectionHead num="05 / LOADOUT" jp="武装" title="80+ WEAPONS." titleAccent="40+ CYBERWARE." />
       <Stagger className="grid-5" gap={0.09}>
         {[
-          { category: "WEAPON", name: "TANTO-X",    type: "ENERGY SMG",    rarity: "RARE",      kanji: "短", imageSrc: "/art/weapons/tanto-x.png" },
-          { category: "WEAPON", name: "RAIDEN-9",   type: "RAILGUN",       rarity: "EXOTIC",    kanji: "雷", imageSrc: "/art/weapons/raiden-9.png" },
-          { category: "CYBER",  name: "VESPA-OS",   type: "NEURAL TIER 3", rarity: "EPIC",      kanji: "脳", imageSrc: "/art/cyber/vespa-os.png" },
-          { category: "CYBER",  name: "ARGUS EYE",  type: "VISION TIER 2", rarity: "RARE",      kanji: "眼", imageSrc: "/art/cyber/argus-eye.png" },
-          { category: "CYBER",  name: "TITAN ARMS", type: "COMBAT TIER 4", rarity: "LEGENDARY", kanji: "腕", imageSrc: "/art/cyber/titan-arms.png" },
+          { category: "WEAPON", name: "TANTO-X",    type: "ENERGY SMG",    rarity: "RARE",      kanji: "短", imageSrc: "/art/weapons/tanto-x.jpg" },
+          { category: "WEAPON", name: "RAIDEN-9",   type: "RAILGUN",       rarity: "EXOTIC",    kanji: "雷", imageSrc: "/art/weapons/raiden-9.jpg" },
+          { category: "CYBER",  name: "VESPA-OS",   type: "NEURAL TIER 3", rarity: "EPIC",      kanji: "脳", imageSrc: "/art/cyber/vespa-os.jpg" },
+          { category: "CYBER",  name: "ARGUS EYE",  type: "VISION TIER 2", rarity: "RARE",      kanji: "眼", imageSrc: "/art/cyber/argus-eye.jpg" },
+          { category: "CYBER",  name: "TITAN ARMS", type: "COMBAT TIER 4", rarity: "LEGENDARY", kanji: "腕", imageSrc: "/art/cyber/titan-arms.jpg" },
         ].map((item) => (
           <Reveal key={item.name} direction="up" distance={16}>
             <CodexCard item={item} />
@@ -260,7 +260,7 @@ export const PageHome = () => (
           }}
         >
           <Image
-            src="/art/map/diagram.png"
+            src="/art/map/diagram.jpg"
             alt="Tokyo map diagram — 20 spawn zones, 2 traverse belts (highway, arcade), 1 center arena"
             fill
             sizes="(max-width: 820px) 100vw, 540px"
@@ -277,7 +277,7 @@ export const PageHome = () => (
       <div className="media-stack">
         <Reveal direction="up" distance={20} as="a" amount={0.2} href="#trailer" className="media-trailer" aria-label="Watch trailer · 0:15">
           <Image
-            src="/art/media/trailer-poster.png"
+            src="/art/media/trailer-poster.jpg"
             alt=""
             fill
             sizes="(max-width: 1100px) 100vw, 1100px"
@@ -289,10 +289,10 @@ export const PageHome = () => (
           <div style={{ position: "absolute", bottom: 12, left: 12, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--paper)", letterSpacing: "0.14em", background: "rgba(0,0,0,0.65)", padding: "4px 8px", zIndex: 2 }}>TRAILER · 0:15</div>
         </Reveal>
         <Stagger className="media-thumbs" gap={0.06}>
-          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/gameplay.png"    label="GAMEPLAY · 0:48"    /></Reveal>
-          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/ability-vfx.png" label="ABILITY VFX · 0:22" /></Reveal>
-          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/hero-art.png"    label="HERO ART"          /></Reveal>
-          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/cyber-ui.png"    label="CYBER UI"          /></Reveal>
+          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/gameplay.jpg"    label="GAMEPLAY · 0:48"    /></Reveal>
+          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/ability-vfx.jpg" label="ABILITY VFX · 0:22" /></Reveal>
+          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/hero-art.jpg"    label="HERO ART"          /></Reveal>
+          <Reveal direction="up" distance={12}><MediaThumb src="/art/media/cyber-ui.jpg"    label="CYBER UI"          /></Reveal>
         </Stagger>
       </div>
     </section>

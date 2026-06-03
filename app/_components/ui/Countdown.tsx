@@ -47,9 +47,13 @@ export const Countdown = ({ launchIso = LAUNCH_ISO }: { launchIso?: string }) =>
   const [t, setT] = useState<{ d: number; h: number; m: number; s: number; done: boolean } | null>(null);
 
   useEffect(() => {
-    setT(calc(target));
-    const id = setInterval(() => setT(calc(target)), 1000);
-    return () => clearInterval(id);
+    const update = () => setT(calc(target));
+    const frame = requestAnimationFrame(update);
+    const id = setInterval(update, 1000);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearInterval(id);
+    };
   }, [target]);
 
   if (t?.done) {
