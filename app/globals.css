@@ -28,9 +28,9 @@
      Do NOT redeclare them here. */
 
   --gutter: clamp(20px, 5vw, 72px);
-  /* Narrower content column so the layout breathes on 13–16" laptops
-     instead of running edge-to-edge. ~20% more side margin than 1360. */
-  --content-max-w: 1280px;
+  /* Content column: wide enough to fill large 2K/27" displays without the
+     margins feeling too empty, while still breathing on 13–16" laptops. */
+  --content-max-w: 1408px;
   --content-pad-x: max(var(--gutter), calc((100vw - var(--content-max-w)) / 2));
 
   /* motion tokens — keep in sync with app/_lib/motion.ts */
