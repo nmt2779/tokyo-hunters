@@ -24,6 +24,10 @@ type Tilt3DProps = {
 
 /**
  * Pointer-tracked 3D tilt. Disabled on touch + reduced-motion.
+ *
+ * Writes the transform + glare straight to the DOM via refs (no setState per
+ * pointermove). Re-rendering on every mouse move — across ~20 cards — produced
+ * a render/GC storm that showed up as steadily climbing memory + jank.
  */
 export function Tilt3D({
   children,
@@ -35,9 +39,8 @@ export function Tilt3D({
 }: Tilt3DProps) {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
   const [coarse, setCoarse] = useState(false);
-  const [transform, setTransform] = useState<string>("");
-  const [glarePos, setGlarePos] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -52,7 +55,6 @@ export function Tilt3D({
 
   const onMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
-      if (disabled) return;
       const el = ref.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
@@ -60,17 +62,25 @@ export function Tilt3D({
       const py = (e.clientY - rect.top) / rect.height;
       const rotY = (px - 0.5) * 2 * max;
       const rotX = (0.5 - py) * 2 * max;
-      setTransform(
-        `perspective(${perspective}px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`
-      );
-      if (glare) setGlarePos({ x: px * 100, y: py * 100 });
+      el.style.transition = "transform 80ms linear";
+      el.style.transform = `perspective(${perspective}px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+      const g = glareRef.current;
+      if (g) {
+        g.style.background = `radial-gradient(circle at ${(px * 100).toFixed(1)}% ${(py * 100).toFixed(1)}%, rgba(255,255,255,0.22), transparent 45%)`;
+        g.style.opacity = "1";
+      }
     },
-    [disabled, max, perspective, glare]
+    [max, perspective]
   );
 
   const onLeave = useCallback(() => {
-    setTransform("");
-    setGlarePos(null);
+    const el = ref.current;
+    if (el) {
+      el.style.transition = "transform 320ms var(--ease-out)";
+      el.style.transform = "";
+    }
+    const g = glareRef.current;
+    if (g) g.style.opacity = "0";
   }, []);
 
   return (
@@ -81,26 +91,21 @@ export function Tilt3D({
       className={className}
       style={{
         ...style,
-        transform: disabled ? undefined : transform || undefined,
         transformStyle: disabled ? undefined : "preserve-3d",
-        transition: disabled
-          ? undefined
-          : transform
-            ? "transform 80ms linear"
-            : "transform 320ms var(--ease-out)",
         willChange: disabled ? undefined : "transform",
         position: style?.position ?? "relative",
       }}
     >
       {children}
-      {glare && glarePos && !disabled && (
+      {glare && !disabled && (
         <div
+          ref={glareRef}
           aria-hidden
           style={{
             position: "absolute",
             inset: 0,
             pointerEvents: "none",
-            background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, rgba(255,255,255,0.22), transparent 45%)`,
+            opacity: 0,
             mixBlendMode: "screen",
             zIndex: 5,
             transition: "opacity 120ms linear",

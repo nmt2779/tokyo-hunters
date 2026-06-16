@@ -67,14 +67,10 @@ export function EmberLayer() {
           speed: { min: -2, max: 2 },
         },
       },
-      emitters: [
-        {
-          direction: "top",
-          rate: { delay: 0.4, quantity: 1 },
-          position: { x: 50, y: 110 },
-          size: { width: 100, height: 0 },
-        },
-      ],
+      // No `emitters`: combined with `number.value` they fight each other and
+      // the particle array grows unbounded over time (memory leak). `number`
+      // alone keeps a fixed pool — when one drifts off-screen and is
+      // destroyed, the engine respawns it, so the count stays constant.
     }),
     [coarse]
   );
