@@ -87,7 +87,7 @@ export default async function OpengraphImage() {
             }}
           >
             100-player royale. 20 squads. 2 combat belts.
-            One contested center. Drops 07.15.26.
+            One contested center. Drops 07.31.26.
           </div>
         </div>
         {/* Bottom-left tag */}

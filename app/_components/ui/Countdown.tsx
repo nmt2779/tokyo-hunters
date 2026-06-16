@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const LAUNCH_ISO = "2026-07-15T00:00:00+09:00"; // Tokyo midnight
+const LAUNCH_ISO = "2026-07-31T00:00:00+09:00"; // Tokyo midnight
 
 const calc = (target: number) => {
   const diff = Math.max(0, target - Date.now());

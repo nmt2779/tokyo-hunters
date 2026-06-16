@@ -84,7 +84,7 @@ export const PageHome = () => (
             <p style={{ marginTop: 18, maxWidth: 460, color: "var(--text-dark)", fontSize: 14, lineHeight: 1.6, fontFamily: "var(--font-mono)" }}>
               Twenty squads spawn across neo-Tokyo. Push through two combat belts —
               highway, then arcade — toward the contested center. Last team standing wins.
-              Free to play, forever. Drops <span style={{ color: "var(--accent)" }}>07.15.26</span>.
+              Free to play, forever. Drops <span style={{ color: "var(--accent)" }}>07.31.26</span>.
             </p>
           </MountReveal>
           <MountReveal delay={0.58} y={12}>
@@ -327,7 +327,7 @@ export const PageHome = () => (
         </Reveal>
         <Reveal direction="up" distance={16}>
           <h2 className="th-sec-title" style={{ position: "relative", fontSize: "clamp(48px, 9vw, 110px)" }}>
-            DROPS <span className="accent">07.15.26</span>
+            DROPS <span className="accent">07.31.26</span>
           </h2>
         </Reveal>
         <Reveal direction="up" distance={16}>

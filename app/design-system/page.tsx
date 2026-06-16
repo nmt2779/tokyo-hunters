@@ -445,7 +445,7 @@ export default function DesignSystemPage() {
         <div className="box dark" style={{ padding: 28, marginBottom: 20 }}>
           <Label accent>&lt;Countdown /&gt; — app/_components/ui/Countdown.tsx</Label>
           <div style={{ marginTop: 6, fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dark)", letterSpacing: "0.1em" }}>
-            DEFAULT TARGET · 2026-07-15 00:00 JST · ticks every second
+            DEFAULT TARGET · 2026-07-31 00:00 JST · ticks every second
           </div>
           <div style={{ marginTop: 18, display: "flex", justifyContent: "center" }}>
             <Countdown />
