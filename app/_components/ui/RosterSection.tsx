@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { BLUR_DATA_URL } from "../../_lib/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Kanji, Tag } from "../wireframe-primitives";
@@ -43,6 +44,8 @@ export const RosterSection = ({
             alt={`${selected.name} — ${selected.role.toLowerCase()} hunter`}
             fill
             sizes="(max-width: 820px) 100vw, 540px"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
             style={{ objectFit: "cover", objectPosition: "center 20%" }}
             key={selected.id}
           />

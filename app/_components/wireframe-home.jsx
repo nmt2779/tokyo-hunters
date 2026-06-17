@@ -14,6 +14,7 @@ import {
   TopNav,
 } from "./wireframe-primitives";
 import Image from "next/image";
+import { BLUR_DATA_URL } from "../_lib/image";
 import { CodexCard } from "./ui/CodexCard";
 import { Countdown } from "./ui/Countdown";
 import { EmailSignup } from "./ui/EmailSignup";
@@ -264,6 +265,8 @@ export const PageHome = () => (
             alt="Tokyo map diagram — 20 spawn zones, 2 traverse belts (highway, arcade), 1 center arena"
             fill
             sizes="(max-width: 820px) 100vw, 540px"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
             style={{ objectFit: "contain" }}
           />
         </Reveal>
@@ -281,6 +284,8 @@ export const PageHome = () => (
             alt=""
             fill
             sizes="(max-width: 1100px) 100vw, 1100px"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
             style={{ objectFit: "cover" }}
           />
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2 }}>

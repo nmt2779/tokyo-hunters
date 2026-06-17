@@ -4,6 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ViewTransition } from "react";
+import { BLUR_DATA_URL } from "../_lib/image";
 import {
   Brackets,
   Btn,
@@ -500,6 +501,8 @@ export const PageHunterDetail = ({ id = "oni" }) => {
                   fill
                   priority
                   sizes="(max-width: 820px) 100vw, 540px"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                   style={{ objectFit: "cover" }}
                 />
               </ViewTransition>

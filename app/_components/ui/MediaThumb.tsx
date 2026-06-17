@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { BLUR_DATA_URL } from "../../_lib/image";
 import { Tilt3D } from "../motion/Tilt3D";
 
 export const MediaThumb = ({
@@ -23,6 +24,8 @@ export const MediaThumb = ({
         alt={alt ?? label}
         fill
         sizes="(max-width: 820px) 50vw, 240px"
+        placeholder="blur"
+        blurDataURL={BLUR_DATA_URL}
         style={{ objectFit: "cover" }}
       />
       <div

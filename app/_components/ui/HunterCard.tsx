@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ViewTransition } from "react";
 import { Kanji } from "../wireframe-primitives";
 import { Tilt3D } from "../motion/Tilt3D";
+import { BLUR_DATA_URL } from "../../_lib/image";
 
 export type Hunter = {
   id: string;
@@ -41,6 +42,8 @@ export const HunterCard = (props: Props) => {
               alt={hunter.name}
               fill
               sizes="(max-width: 720px) 50vw, 220px"
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
               style={{
                 objectFit: "cover",
                 objectPosition: "center 20%",

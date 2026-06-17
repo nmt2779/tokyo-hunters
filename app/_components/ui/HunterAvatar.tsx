@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { BLUR_DATA_URL } from "../../_lib/image";
 import Link from "next/link";
 import { Kanji } from "../wireframe-primitives";
 import type { Hunter } from "./HunterCard";
@@ -35,6 +36,8 @@ export const HunterAvatar = ({
           alt=""
           fill
           sizes="160px"
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
           style={{ objectFit: "cover", objectPosition: "center 20%" }}
         />
       )}

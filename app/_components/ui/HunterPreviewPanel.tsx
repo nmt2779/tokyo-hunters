@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BLUR_DATA_URL } from "../../_lib/image";
 import Link from "next/link";
 import { ViewTransition } from "react";
 import { Img, Kanji, Tag } from "../wireframe-primitives";
@@ -103,6 +104,8 @@ export const HunterPreviewPanel = ({
               fill
               priority
               sizes="(max-width: 820px) 100vw, 540px"
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
               style={{ objectFit: "cover" }}
             />
           </ViewTransition>
@@ -113,6 +116,8 @@ export const HunterPreviewPanel = ({
             fill
             priority
             sizes="(max-width: 820px) 100vw, 540px"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
             style={{ objectFit: "cover" }}
           />
         )}
